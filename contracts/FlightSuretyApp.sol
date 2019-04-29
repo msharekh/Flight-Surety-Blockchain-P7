@@ -64,6 +64,8 @@ contract FlightSuretyApp {
         _;
     }
 
+   
+
     /********************************************************************************************/
     /*                                       CONSTRUCTOR                                        */
     /********************************************************************************************/
@@ -122,15 +124,16 @@ contract FlightSuretyApp {
     */   
     function registerAirline
                             (  
-                                address newAirline 
+                                address _address 
                             )
-                            external                            
+                            external  
+                                                  
                             // returns(bool success, uint256 votes)
-                            view
-                            returns(bool)
+                            // view
+                            // returns(bool)
     {
          // return   true;
-        return flightSuretyData.registerAirline(newAirline);
+        flightSuretyData.registerAirline(_address);
         // return (success, 0);
     }
 
@@ -373,7 +376,7 @@ contract FlightSuretyData{
 
     function registerAirline
                             (   
-                                address newAirline
+                                address _address
                             )
                             external
                             view                     

@@ -90,8 +90,6 @@ contract('Flight Surety Tests', async (accounts) => {
 
         // ARRANGE
         let newAirline = accounts[2];
-        console.log('accounts[2]', ':	', accounts[2]);
-        console.log('newAirline', ':	', newAirline);
 
 
         //register accounts[2] :	 0xC61C9DaDd04970bCD7802eCEBF758F87B1E35D15
@@ -100,40 +98,27 @@ contract('Flight Surety Tests', async (accounts) => {
         // await config.flightSuretyApp.registerAirline(newAirline, { from: config.firstAirline });
         // let reg = await config.flightSuretyApp.registerAirline(newAirline);
         // let reg = await config.flightSuretyData.registerAirline(newAirline, { from: config.firstAirline });
-        let reg = await config.flightSuretyApp.registerAirline(newAirline, { from: config.firstAirline });
-        console.log('     reg', ':	', reg);
+        await config.flightSuretyApp.registerAirline(newAirline, { from: config.firstAirline });
+
 
         let getAirlineresult = await config.flightSuretyData.getAirline.call(newAirline);
         console.log('getAirlineresult', ':	', getAirlineresult);
 
         // ASSERT
-        assert.equal(reg, true, "airline is not registered!");
+        // assert.equal(reg, true, "airline is not registered!");
     });
 
-    it('(x1)(airline) is Airline using getAirline()', async () => {
+
+
+    it('(6)(airline) is Airline using isAirline()', async () => {
         let newAirline = accounts[2];
 
         // ACT
         // console.log('newAirline', ':	', newAirline);
-        let getAirlineresult = await config.flightSuretyData.getAirline(newAirline);
-        console.log('getAirlineresult', ':	', getAirlineresult);
+        let result = await config.flightSuretyData.isAirline(newAirline);
+        // console.log('airline', ':	', airline);
         // console.log('airline[0]', ':	', airline[0]);
-
-
-        // ASSERT
-        //assert.equal(result, true, "airline is not registered!");
-
-    });
-
-    /* it('(6)(airline) is Airline using isAirline()', async () => {
-        let newAirline = accounts[2];
-
-        // ACT
-        // console.log('newAirline', ':	', newAirline);
-        let airline = await config.flightSuretyData.isAirline(newAirline);
-        console.log('airline', ':	', airline);
-        console.log('airline[0]', ':	', airline[0]);
-        result = airline[0];
+        // result = airline[0];
         // airline = JSON.parse(airline)
         // console.log('airline.isRegistered', ':	', airline.isRegistered);
         // console.log('result', ':	', result);
@@ -141,7 +126,7 @@ contract('Flight Surety Tests', async (accounts) => {
         // ASSERT
         assert.equal(result, true, "airline is not registered!");
 
-    }); */
+    });
 
 
     it('(7)(airline) cannot register an Airline using registerAirline() if it is not funded', async () => {

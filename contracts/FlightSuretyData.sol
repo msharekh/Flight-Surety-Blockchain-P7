@@ -34,8 +34,15 @@ contract FlightSuretyData {
         // TODO: REGISTER FIRST AIRLINE WHEN DEPLOYED
         //DONE
         // airlines[contractOwner].airlineAddress=contractOwner;
-        airlines[contractOwner].isRegistered=true;
-        airlines[contractOwner].paidValue=0;
+        
+        airlines[contractOwner].isRegistered = true;
+        airlines[contractOwner].paidValue = 5;
+        airlines[contractOwner].airlineName = "SAUDI AIRLINES";           
+        airlines[contractOwner].airlineAddress = contractOwner;
+        
+        airlinesAdresses.push(contractOwner);
+        
+    
     }
 
     /********************************************************************************************/
@@ -65,6 +72,10 @@ contract FlightSuretyData {
         _;
     }
 
+    modifier requireIsFunded(address _address) {
+        require(airlines[_address].paidValue >= 10, "Airline is not funded with at least 10 Ethers");
+        _;
+    }
     /********************************************************************************************/
     /*                                       UTILITY FUNCTIONS                                  */
     /********************************************************************************************/
@@ -119,9 +130,8 @@ contract FlightSuretyData {
     struct Airline {
         bool isRegistered;
         uint256 paidValue;
-
-        // string airlineName;                 
-        // address airlineAddress;
+        string airlineName;                 
+        address airlineAddress;
     }
     mapping(address => Airline) public airlines;
 
@@ -136,13 +146,16 @@ contract FlightSuretyData {
                                 address _address
                             )
                             external
+                            requireIsFunded(_address)  
                             view                     
                             returns (bool)
                             
     { 
         airlines[_address].isRegistered = true;
         airlines[_address].paidValue = 10;
-
+        airlines[_address].airlineName ="KLM";           
+        airlines[_address].airlineAddress=_address;
+        
         airlinesAdresses.push(_address);
 
         return airlines[_address].isRegistered;
@@ -181,7 +194,7 @@ contract FlightSuretyData {
                     )
                     external
                     view                     
-                    returns (bool,address)
+                    returns (bool,uint256,string,address)
     {
         // airlines[airlineAddress].isRegistered = true;
         // airlines[airlineAddress].paidValue = 10;
@@ -189,8 +202,10 @@ contract FlightSuretyData {
         // return airlines[airlineAddress].isRegistered;
         return  
             (
-            airlines[_address].isRegistered,
-            _address
+                airlines[_address].isRegistered,
+                airlines[_address].paidValue,
+                airlines[_address].airlineName,                
+                airlines[_address].airlineAddress
             );
         // return true; 
         // return false;
@@ -271,4 +286,5 @@ contract FlightSuretyData {
 
 
 }
+
 
