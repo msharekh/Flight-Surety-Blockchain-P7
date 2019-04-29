@@ -137,8 +137,8 @@ contract FlightSuretyData {
                             returns (bool)
                             
     { 
-        airlines[newAirline].isRegistered = true;
-        //airlines[newAirline].paidValue = 0;
+        // airlines[newAirline].isRegistered = true;
+        // airlines[newAirline].paidValue = 0;
         return true;
     }
 
@@ -150,8 +150,8 @@ contract FlightSuretyData {
                     view                     
                     returns (bool)
     {
-        return airlines[airlineAddress].isRegistered;
-        // return true; 
+        // return airlines[airlineAddress].isRegistered;
+        return true; 
     }
 
    /**

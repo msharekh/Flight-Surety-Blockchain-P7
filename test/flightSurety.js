@@ -94,7 +94,7 @@ contract('Flight Surety Tests', async (accounts) => {
         console.log('newAirline', ':	', accounts[2]);
         console.log('config.firstAirline', ':	', config.firstAirline); //firstAirline = accounts[1]
         // await config.flightSuretyApp.registerAirline(newAirline, { from: config.firstAirline });
-        let result = await config.flightSuretyData.registerAirline(newAirline, { from: config.firstAirline });
+        let result = await config.flightSuretyApp.registerAirline(newAirline, { from: config.firstAirline });
         //fund accounts[2] :	 0xC61C9DaDd04970bCD7802eCEBF758F87B1E35D15
 
 

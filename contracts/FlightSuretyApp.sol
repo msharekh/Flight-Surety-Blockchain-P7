@@ -121,13 +121,17 @@ contract FlightSuretyApp {
     *
     */   
     function registerAirline
-                            (   
+                            (  
+                                address newAirline 
                             )
-                            external
-                            pure
-                            returns(bool success, uint256 votes)
+                            external                            
+                            // returns(bool success, uint256 votes)
+                            view
+                            returns(bool)
     {
-        return (success, 0);
+         // return   true;
+        return flightSuretyData.registerAirline(newAirline);
+        // return (success, 0);
     }
 
 
@@ -366,4 +370,12 @@ contract FlightSuretyData{
                             public 
                             view 
                             returns(bool);
+
+    function registerAirline
+                            (   
+                                address newAirline
+                            )
+                            external
+                            view                     
+                            returns (bool);
 }
