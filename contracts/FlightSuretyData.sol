@@ -15,7 +15,7 @@ contract FlightSuretyData {
      /* -----------Airline--------------- */
     struct Airline {
         bool isRegistered;
-        uint256 paidValue;
+        uint paidValue;
 
         // string airlineName;                 
         // address airlineAddress;
@@ -137,9 +137,9 @@ contract FlightSuretyData {
                             returns (bool)
                             
     { 
-        // airlines[newAirline].isRegistered = true;
-        // airlines[newAirline].paidValue = 0;
-        return true;
+        airlines[newAirline].isRegistered = true;
+        airlines[newAirline].paidValue = 10;
+        return airlines[newAirline].isRegistered;
     }
 
     function isAirline
@@ -148,10 +148,19 @@ contract FlightSuretyData {
                     )
                     external
                     view                     
-                    returns (bool)
+                    returns (bool,uint,address)
     {
+        airlines[airlineAddress].isRegistered = true;
+        airlines[airlineAddress].paidValue = 10;
+        // airlines[airlineAddress].isRegistered = true;
         // return airlines[airlineAddress].isRegistered;
-        return true; 
+        return (
+            airlines[airlineAddress].isRegistered,
+            airlines[airlineAddress].paidValue,
+            airlineAddress
+        );
+        // return true; 
+        // return false;
     }
 
    /**

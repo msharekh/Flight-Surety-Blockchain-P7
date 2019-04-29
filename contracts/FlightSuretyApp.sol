@@ -378,4 +378,5 @@ contract FlightSuretyData{
                             external
                             view                     
                             returns (bool);
+     
 }
