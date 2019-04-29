@@ -17,8 +17,8 @@ contract('Flight Surety Tests', async (accounts) => {
     it(`(multiparty) has correct initial isOperational() value`, async function () {
 
         // Get operating status
-        let status = await config.flightSuretyData.isOperational.call();
-        // let status = await config.flightSuretyApp.isOperational.call();
+        // let status = await config.flightSuretyData.isOperational.call();
+        let status = await config.flightSuretyApp.isOperational.call();
         assert.equal(status, true, "Incorrect initial operating status value");
 
     });
