@@ -59,6 +59,19 @@ contract FlightSuretyData {
     /********************************************************************************************/
     /*                                       UTILITY FUNCTIONS                                  */
     /********************************************************************************************/
+    /**
+    * @dev Authorize address
+    *
+    */      
+    function authorizeCaller(
+        address flightSuretyAppAddress
+    ) 
+                            public 
+                             
+    {
+        //TODO: ADD ADDRESS TO ARRAY
+    }
+
 
     /**
     * @dev Get operating status of contract
