@@ -12,6 +12,17 @@ contract FlightSuretyData {
     address private contractOwner;                                      // Account used to deploy contract
     bool private operational = true;                                    // Blocks all state changes throughout the contract if false
 
+     /* -----------Airline--------------- */
+    struct Airline {
+        bool isRegistered;
+        uint256 paidValue;
+
+        // string airlineName;                 
+        // address airlineAddress;
+    }
+    mapping(address => Airline) private airlines;
+
+ 
     /********************************************************************************************/
     /*                                       EVENT DEFINITIONS                                  */
     /********************************************************************************************/
@@ -27,6 +38,12 @@ contract FlightSuretyData {
                                 public 
     {
         contractOwner = msg.sender;
+
+        // TODO: REGISTER FIRST AIRLINE WHEN DEPLOYED
+        //DONE
+        // airlines[contractOwner].airlineAddress=contractOwner;
+        airlines[contractOwner].isRegistered=true;
+        airlines[contractOwner].paidValue=0;
     }
 
     /********************************************************************************************/
@@ -113,12 +130,25 @@ contract FlightSuretyData {
     */   
     function registerAirline
                             (   
+                                address newAirline
                             )
                             external
-                            pure
-    {
+                            
+    { 
+        airlines[newAirline].isRegistered = true;
+        airlines[newAirline].paidValue = 0;
     }
 
+    function isAirline
+                    (
+                        address airlineAddress
+                    )
+                    external
+                    view                     
+                    returns (bool)
+    {
+        return airlines[airlineAddress].isRegistered;
+    }
 
    /**
     * @dev Buy insurance for a flight

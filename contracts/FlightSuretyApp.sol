@@ -99,6 +99,18 @@ contract FlightSuretyApp {
         return flightSuretyData.isOperational();
      }
 
+
+    // function fetchAirlines() 
+    //                         public 
+    //                         view 
+    //                         returns(bool) 
+    // {
+    //    //  TODO: Modify to call data contract's status
+    //     // return true;
+    //     // return true;
+    //     // bool result = flightSuretyData.isOperational();
+    //     return flightSuretyData.isOperational();
+    //  }
     /********************************************************************************************/
     /*                                     SMART CONTRACT FUNCTIONS                             */
     /********************************************************************************************/
@@ -167,7 +179,11 @@ contract FlightSuretyApp {
                                                 isOpen: true
                                             });
 
-        emit OracleRequest(index, airline, flight, timestamp);
+        emit OracleRequest( index,
+                            airline,
+                            flight,
+                            timestamp
+           );
     } 
 
 
