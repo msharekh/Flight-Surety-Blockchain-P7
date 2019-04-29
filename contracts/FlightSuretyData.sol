@@ -133,10 +133,13 @@ contract FlightSuretyData {
                                 address newAirline
                             )
                             external
+                            view                     
+                            returns (bool)
                             
     { 
         airlines[newAirline].isRegistered = true;
-        airlines[newAirline].paidValue = 0;
+        //airlines[newAirline].paidValue = 0;
+        return true;
     }
 
     function isAirline
@@ -148,6 +151,7 @@ contract FlightSuretyData {
                     returns (bool)
     {
         return airlines[airlineAddress].isRegistered;
+        // return true; 
     }
 
    /**

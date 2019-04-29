@@ -2,6 +2,19 @@
 var Test = require('../config/testConfig.js');
 var BigNumber = require('bignumber.js');
 
+// Available Accounts
+// ==================
+// (0) 0x68f48429f451934fd1032ba63be0f72eb10424eb (~100 ETH)
+// (1) 0x18495d2af425d56005812644136bf68282188aea (~100 ETH)
+// (2) 0xc61c9dadd04970bcd7802ecebf758f87b1e35d15 (~100 ETH)
+// (3) 0xa513e91f2aaa5ec9b9b4815f44494fb323ae8a08 (~100 ETH)
+// (4) 0xd64f959e7f9060e034c0fc9d61c5bc0b71e0d38c (~100 ETH)
+// (5) 0x5e432600a3a158fbd90e9bce14089d1551b60007 (~100 ETH)
+// (6) 0xd1e7d7e8468e83282f5b506bc57cac3c380e38e9 (~100 ETH)
+// (7) 0x6de39a2aad3e1aab5e26d272c749224c39643ac9 (~100 ETH)
+// (8) 0xf29001bf5449022cdc7111e2f18d99395f61819c (~100 ETH)
+// (9) 0xfbedee2f31462596681a486e6e91f4cf00c69f1f (~100 ETH)
+
 contract('Flight Surety Tests', async (accounts) => {
 
     var config;
@@ -74,15 +87,20 @@ contract('Flight Surety Tests', async (accounts) => {
         // ARRANGE
         let newAirline = accounts[2];
         console.log('accounts[2]', ':	', accounts[2]);
+        console.log('newAirline', ':	', newAirline);
 
 
         //register accounts[2] :	 0xC61C9DaDd04970bCD7802eCEBF758F87B1E35D15
-        await config.flightSuretyApp.registerAirline(newAirline, { from: config.firstAirline });
+        console.log('newAirline', ':	', accounts[2]);
+        console.log('config.firstAirline', ':	', config.firstAirline); //firstAirline = accounts[1]
+        // await config.flightSuretyApp.registerAirline(newAirline, { from: config.firstAirline });
+        let result = await config.flightSuretyData.registerAirline(newAirline, { from: config.firstAirline });
         //fund accounts[2] :	 0xC61C9DaDd04970bCD7802eCEBF758F87B1E35D15
 
 
         // ACT
-        let result = await config.flightSuretyData.isAirline.call(newAirline);
+        // console.log('newAirline', ':	', newAirline);
+        // let result = await config.flightSuretyData.isAirline.call(newAirline);
         console.log('result', ':	', result);
 
         // ASSERT

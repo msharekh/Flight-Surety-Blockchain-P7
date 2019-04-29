@@ -89,6 +89,7 @@ To build dapp for prod: npm run dapp:prod
 
 Deploy the contents of the ./dapp folder
 
+ganache-cli -m "mixture fog alert teach south fiber fruit tag random flat negative expire"
 
 ==================
 
