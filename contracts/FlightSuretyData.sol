@@ -4,7 +4,7 @@ import "../node_modules/openzeppelin-solidity/contracts/math/SafeMath.sol";
 
 contract FlightSuretyData {
     using SafeMath for uint256;
-
+    bool testme=true;
     /********************************************************************************************/
     /*                                       DATA VARIABLES                                     */
     /********************************************************************************************/
@@ -12,15 +12,7 @@ contract FlightSuretyData {
     address private contractOwner;                                      // Account used to deploy contract
     bool private operational = true;                                    // Blocks all state changes throughout the contract if false
 
-     /* -----------Airline--------------- */
-    struct Airline {
-        bool isRegistered;
-        uint paidValue;
-
-        // string airlineName;                 
-        // address airlineAddress;
-    }
-    mapping(address => Airline) private airlines;
+    
 
  
     /********************************************************************************************/
@@ -123,6 +115,17 @@ contract FlightSuretyData {
     /*                                     SMART CONTRACT FUNCTIONS                             */
     /********************************************************************************************/
 
+ /* -----------Airline--------------- */
+    struct Airline {
+        bool isRegistered;
+        uint256 paidValue;
+
+        // string airlineName;                 
+        // address airlineAddress;
+    }
+    mapping(address => Airline) public airlines;
+
+    address[] airlinesAdresses;
    /**
     * @dev Add an airline to the registration queue
     *      Can only be called from FlightSuretyApp contract
@@ -130,39 +133,68 @@ contract FlightSuretyData {
     */   
     function registerAirline
                             (   
-                                address newAirline
+                                address _address
                             )
                             external
                             view                     
                             returns (bool)
                             
     { 
-        airlines[newAirline].isRegistered = true;
-        airlines[newAirline].paidValue = 10;
-        return airlines[newAirline].isRegistered;
+        airlines[_address].isRegistered = true;
+        airlines[_address].paidValue = 10;
+
+        airlinesAdresses.push(_address);
+
+        return airlines[_address].isRegistered;
+    }
+
+    function getAirlinesAdresses() external view returns (address[]) {
+         return airlinesAdresses;
     }
 
     function isAirline
                     (
-                        address airlineAddress
+                        address _address
                     )
                     external
                     view                     
-                    returns (bool,uint,address)
+                    // returns (bool,uint256,address)
+                    returns (bool)
     {
-        airlines[airlineAddress].isRegistered = true;
-        airlines[airlineAddress].paidValue = 10;
         // airlines[airlineAddress].isRegistered = true;
-        // return airlines[airlineAddress].isRegistered;
-        return (
-            airlines[airlineAddress].isRegistered,
-            airlines[airlineAddress].paidValue,
-            airlineAddress
-        );
+        // airlines[airlineAddress].paidValue = 10;
+        // airlines[airlineAddress].isRegistered = true;
+        return airlines[_address].isRegistered;
+        // return (
+            // airlines[airlineAddress].isRegistered,
+        //     testme,
+        //     airlines[airlineAddress].paidValue,
+        //     airlineAddress
+        // );
         // return true; 
         // return false;
     }
 
+    function getAirline
+                    (
+                        address _address
+                    )
+                    external
+                    view                     
+                    returns (bool,address)
+    {
+        // airlines[airlineAddress].isRegistered = true;
+        // airlines[airlineAddress].paidValue = 10;
+        // airlines[airlineAddress].isRegistered = true;
+        // return airlines[airlineAddress].isRegistered;
+        return  
+            (
+            airlines[_address].isRegistered,
+            _address
+            );
+        // return true; 
+        // return false;
+    }
    /**
     * @dev Buy insurance for a flight
     *
