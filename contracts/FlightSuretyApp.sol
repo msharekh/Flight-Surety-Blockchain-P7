@@ -74,12 +74,13 @@ contract FlightSuretyApp {
     */
     constructor
                                 (
+                                    address dataAddress
                                 ) 
                                 public 
     {
         contractOwner = msg.sender;
         // create object of flightSuretyData
-        flightSuretyData = FlightSuretyData(contractOwner);
+        flightSuretyData = FlightSuretyData(dataAddress);
     }
 
     /********************************************************************************************/
@@ -94,9 +95,9 @@ contract FlightSuretyApp {
        //  TODO: Modify to call data contract's status
         // return true;
         // return true;
-        bool resutl = flightSuretyData.isOperational();
-        return true;
-    }
+        // bool result = flightSuretyData.isOperational();
+        return flightSuretyData.isOperational();
+     }
 
     /********************************************************************************************/
     /*                                     SMART CONTRACT FUNCTIONS                             */
