@@ -49,7 +49,7 @@ export default class Contract {
     // bool,uint256,string,address
     createAirline(_address, _name, callback) {
         let self = this;
-        //debugger;
+        ////debugger;
         self.flightSuretyApp.methods
             // .registerAirline(v1, { from: self.owner });
             .createAirline(_address, _name)
@@ -62,7 +62,7 @@ export default class Contract {
 
     getAirline(_address, callback) {
         let self = this;
-        debugger;
+        //debugger;
         self.flightSuretyApp.methods
             .getAirline(_address)
             .call({ from: self.owner }, callback);
@@ -75,7 +75,7 @@ export default class Contract {
 
     getAirlinesAdresses(callback) {
         let self = this;
-        //debugger;
+        ////debugger;
 
         //TODO: TO CONFIGURE flightSuretyData.getAirlinesAdresses
 
@@ -85,14 +85,42 @@ export default class Contract {
 
     }
 
+
     registerAirline(_address, callback) {
         let self = this;
-        //debugger;
+        ////debugger;
         self.flightSuretyApp.methods
             .registerAirline(_address)
             .send({ from: self.owner, gas: 5555555 }, (error, result) => {
                 callback(_address);
             });
+
+    }
+
+
+    // flight,airline,timestamp,statusCode
+    createFlight(airline, flight, timestamp, statusCode, callback) {
+        let self = this;
+        //debugger;
+        self.flightSuretyApp.methods
+            // .registerAirline(v1, { from: self.owner });
+            .createFlight(airline, flight, timestamp, statusCode)
+            .send({ from: self.owner, gas: 5555555 }, (error, result) => {
+                callback(flight);
+            });
+        // .registerAirline.call(_airlineAddress, callback(_airlineAddress));
+        //callback(_address);
+    }
+
+    getFlights(callback) {
+        let self = this;
+        debugger;
+
+        //TODO: TO CONFIGURE flightSuretyData.getAirlinesAdresses
+
+        self.flightSuretyApp.methods
+            .getFlights()
+            .call({ from: self.owner }, callback);
 
     }
 
@@ -102,7 +130,7 @@ export default class Contract {
 
     createPassenger(_address, callback) {
         let self = this;
-        debugger;
+        //debugger;
         self.flightSuretyApp.methods
             // .registerAirline(v1, { from: self.owner });
             .createPassenger(_address)
@@ -115,7 +143,7 @@ export default class Contract {
 
     getPassengersAdresses(callback) {
         let self = this;
-        //debugger;
+        ////debugger;
 
         //TODO: TO CONFIGURE flightSuretyData.getAirlinesAdresses
 
@@ -128,7 +156,7 @@ export default class Contract {
 
     fundAirline(_address, callback) {
         let self = this;
-        //debugger;
+        ////debugger;
         self.flightSuretyApp.methods
             .fundAirline(_address)
             .send({ from: self.owner, gas: 5555555 }, (error, result) => {

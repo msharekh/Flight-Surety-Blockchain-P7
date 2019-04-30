@@ -13,16 +13,16 @@ import './flightsurety.css';
         // Read transaction
         contract.isOperational((error, result) => {
             console.log(error, result);
-            // //debugger;
+            // ////debugger;
             display('Operational Status', 'Check if contract is operational', [{ label: 'Operational Status', error: error, value: result }]);
         });
 
 
         // Read transaction getAirlinesAdresses
         contract.getAirlinesAdresses((error, result) => {
-            //debugger;
+            ////debugger;
             console.log(error, result);
-            updateDDLs("selGetAirlinesAdresses", result);
+            updateDDLs("selGetAirlinesAdresses", result, "airline");
 
 
         });
@@ -31,9 +31,17 @@ import './flightsurety.css';
 
         // Read transaction getPassengers
         contract.getPassengersAdresses((error, result) => {
+            //debugger;
+            console.log(error, result);
+            updateDDLs("selGetPassengersAdresses", result, "passenger");
+
+        });
+
+        // Read transaction getPassengers
+        contract.getFlights((error, result) => {
             debugger;
             console.log(error, result);
-            updateDDLs("selGetPassengersAdresses", result);
+            updateDDLs("selFlights", result, "flight");
 
         });
 
@@ -49,14 +57,14 @@ import './flightsurety.css';
         // Write createAirline
         contract.createAirline(_address, _name, (v) => {
             // display('Oracles', 'Trigger oracles', [{ label: 'Fetch Flight Status', error: error, value: result.flight + ' ' + result.timestamp }]);
-            //debugger;
+            ////debugger;
             console.log('v', ':	', v);
 
             // Read transaction getAirlinesAdresses
             contract.getAirlinesAdresses((error, result) => {
-                //debugger;
+                ////debugger;
                 console.log(error, result);
-                updateDDLs("selGetAirlinesAdresses", result);
+                updateDDLs("selGetAirlinesAdresses", result, "airline");
 
             });
 
@@ -65,39 +73,71 @@ import './flightsurety.css';
     // create-airline
 
 
-    // createPassenger
-    DOM.elid('create-passenger').addEventListener('click', () => {
-        let _address = DOM.elid('passengerAddress').value;
-        contract.createPassenger(_address, (v) => {
+
+    DOM.elid('create-flight').addEventListener('click', () => {
+
+        // address airline,
+        // string flight,
+        // uint256 timestamp,
+        // uint8 statusCode
+
+        let flight = DOM.elid('flight').value;
+        let _airline = document.querySelector("#selGetAirlinesAdresses").value
+        let timestamp = Math.floor(Date.now() / 1000);
+        let statusCode = 0;
+        //debugger;
+        contract.createFlight(_airline, flight, timestamp, statusCode, ((error, v) => {
             // display('Oracles', 'Trigger oracles', [{ label: 'Fetch Flight Status', error: error, value: result.flight + ' ' + result.timestamp }]);
             //debugger;
             console.log('v', ':	', v);
 
             // Read transaction getPassengers
-            contract.getPassengersAdresses((error, result) => {
-                debugger;
+            contract.getFlights((error, result) => {
+                //debugger;
                 console.log(error, result);
 
-                updateDDLs(result);
-                updateDDLs("selGetPassengersAdresses", result);
+                updateDDLs("selFlights", result, "flight");
+
+            });
+        }));
+
+
+    });
+
+    // createFlight
+
+    DOM.elid('create-passenger').addEventListener('click', () => {
+        let _address = DOM.elid('passengerAddress').value;
+        contract.createPassenger(_address, (v) => {
+            // display('Oracles', 'Trigger oracles', [{ label: 'Fetch Flight Status', error: error, value: result.flight + ' ' + result.timestamp }]);
+            ////debugger;
+            console.log('v', ':	', v);
+
+            // Read transaction getPassengers
+            contract.getPassengersAdresses((error, result) => {
+                //debugger;
+                console.log(error, result);
+
+                updateDDLs("selGetPassengersAdresses", result, "passenger");
 
             });
 
         });
     })
-    // create-airline
+    // createPassenger
+
     DOM.elid('get-airline').addEventListener('click', () => {
         // let _address = DOM.elid('airlineAddress').value;
         let _address = document.querySelector("#selGetAirlinesAdresses").value
 
 
         contract.getAirline(_address, (error, result) => {
-            // debugger;
+            // //debugger;
             console.log(error, result);
             let html = `<p>registered:\t\t${result[0]}</p>
                             <p>funded:\t\t${result[1]}</p>
                             <p>airline Name:\t\t${result[2]}</p>
-                            <p>airline Address:\t\t${result[3]}</p>`
+                            <p>airline Address:\t\t${result[3].substr(0, 10)}</p>`
             document.getElementById("airline-info").innerHTML = html;
 
 
@@ -124,7 +164,7 @@ import './flightsurety.css';
 
         // Write transaction
         contract.registerAirline(_address, (v) => {
-            //debugger;
+            ////debugger;
             console.log('_address', ':	', v);
         });
     })
@@ -134,10 +174,10 @@ import './flightsurety.css';
     DOM.elid('fund-airline').addEventListener('click', () => {
         // let _airlineName = DOM.elid('airlineName').value;
         let _address = document.querySelector("#selGetAirlinesAdresses").value
-        debugger;
+        //debugger;
         // Write transaction
         contract.fundAirline(_address, (v) => {
-            //debugger;
+            ////debugger;
             console.log('_address', ':	', v);
         });
     })
@@ -146,10 +186,10 @@ import './flightsurety.css';
 
 
 })();
-function updateDDLs(element, result) {
+function updateDDLs(element, result, type) {
     clearList(element);
     for (let i = 0; i < result.length; i++) {
-        debugger;
+        //debugger;
         console.log(`* ${i} - ${result[i]}`);
         showInList(element, result[i], i);
     }

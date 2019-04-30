@@ -232,8 +232,7 @@ contract FlightSuretyApp {
     bytes32[] flightsList;
 
     function createFlight
-                            (  
-                                
+                            (                                  
                                 address airline,
                                 string flight,
                                 uint256 timestamp,
