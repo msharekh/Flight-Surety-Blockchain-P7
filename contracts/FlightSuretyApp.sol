@@ -117,6 +117,21 @@ contract FlightSuretyApp {
     /*                                     SMART CONTRACT FUNCTIONS                             */
     /********************************************************************************************/
 
+    /**
+    * @dev Add an airline with isRegister = false
+    *
+    */   
+    function createAirline
+                            (  
+                                address _address 
+                            )
+                            external                              
+    {
+         // return   true;
+        flightSuretyData.createAirline(_address);
+        // return (success, 0);
+    }
+
   
    /**
     * @dev Add an airline to the registration queue
@@ -135,6 +150,10 @@ contract FlightSuretyApp {
          // return   true;
         flightSuretyData.registerAirline(_address);
         // return (success, 0);
+    }
+
+    function getAirlinesAdresses() external view returns (address[]) {
+         return flightSuretyData.getAirlinesAdresses();
     }
 
 
@@ -369,17 +388,12 @@ contract FlightSuretyApp {
 
 contract FlightSuretyData{
 
-    function isOperational() 
-                            public 
-                            view 
-                            returns(bool);
+    function isOperational() public view returns(bool);
 
-    function registerAirline
-                            (   
-                                address _address
-                            )
-                            external
-                            view                     
-                            returns (bool);
+    function registerAirline(address _address) external;
+                            // view                     
+                            // returns (bool);
+    function getAirlinesAdresses() external view returns (address[]);
+    function createAirline(address _address,string _name) external;
      
 }

@@ -4,7 +4,7 @@ import "../node_modules/openzeppelin-solidity/contracts/math/SafeMath.sol";
 
 contract FlightSuretyData {
     using SafeMath for uint256;
-    bool testme=true;
+    
     /********************************************************************************************/
     /*                                       DATA VARIABLES                                     */
     /********************************************************************************************/
@@ -36,15 +36,30 @@ contract FlightSuretyData {
         // airlines[contractOwner].airlineAddress=contractOwner;
         
         airlines[contractOwner].isRegistered = true;
-        airlines[contractOwner].paidValue = 5;
+        airlines[contractOwner].fundAmount = 5;
         airlines[contractOwner].airlineName = "SAUDI AIRLINES";           
         airlines[contractOwner].airlineAddress = contractOwner;
         
         airlinesAdresses.push(contractOwner);
         
+        airlinesAdresses.push("0x18495d2af425d56005812644136bf68282188aea");
+        airlinesAdresses.push("0xc61c9dadd04970bcd7802ecebf758f87b1e35d15");
+        airlinesAdresses.push("0xa513e91f2aaa5ec9b9b4815f44494fb323ae8a08");
+        airlinesAdresses.push("0xd64f959e7f9060e034c0fc9d61c5bc0b71e0d38c");
+         
+         
+        // We know the length of the array
+        uint cnt = airlinesAdresses.length;
+        for (uint i=0; i<cnt; i++) {
+            airlines[airlinesAdresses[i]].isRegistered = false;
+            airlines[airlinesAdresses[i]].fundAmount = 0;
+            airlines[airlinesAdresses[i]].airlineName = appendUintToString("Airline-" , i);           
+            airlines[airlinesAdresses[i]].airlineAddress = airlinesAdresses[i];
+        }
     
     }
 
+     
     /********************************************************************************************/
     /*                                       FUNCTION MODIFIERS                                 */
     /********************************************************************************************/
@@ -73,7 +88,7 @@ contract FlightSuretyData {
     }
 
     modifier requireIsFunded(address _address) {
-        require(airlines[_address].paidValue >= 10, "Airline is not funded with at least 10 Ethers");
+        require(airlines[_address].fundAmount >= 10, "Airline is not funded with at least 10 Ethers");
         _;
     }
     /********************************************************************************************/
@@ -129,13 +144,27 @@ contract FlightSuretyData {
  /* -----------Airline--------------- */
     struct Airline {
         bool isRegistered;
-        uint256 paidValue;
+        uint256 fundAmount;
         string airlineName;                 
         address airlineAddress;
     }
     mapping(address => Airline) public airlines;
 
     address[] airlinesAdresses;
+
+    function createAirline
+                            (  
+                                address _address 
+                                string _name 
+                            )
+                            external                              
+    {
+        airlines[_address].fundAmount = 0;
+        airlines[_address].airlineName =_name;           
+        airlines[_address].airlineAddress=_address;
+        
+        airlinesAdresses.push(_address);
+    }
    /**
     * @dev Add an airline to the registration queue
     *      Can only be called from FlightSuretyApp contract
@@ -146,19 +175,13 @@ contract FlightSuretyData {
                                 address _address
                             )
                             external
-                            requireIsFunded(_address)  
-                            view                     
-                            returns (bool)
+                             
                             
     { 
         airlines[_address].isRegistered = true;
-        airlines[_address].paidValue = 10;
-        airlines[_address].airlineName ="KLM";           
-        airlines[_address].airlineAddress=_address;
         
-        airlinesAdresses.push(_address);
 
-        return airlines[_address].isRegistered;
+        // return airlines[_address].isRegistered;
     }
 
     function getAirlinesAdresses() external view returns (address[]) {
@@ -175,13 +198,13 @@ contract FlightSuretyData {
                     returns (bool)
     {
         // airlines[airlineAddress].isRegistered = true;
-        // airlines[airlineAddress].paidValue = 10;
+        // airlines[airlineAddress].fundAmount = 10;
         // airlines[airlineAddress].isRegistered = true;
         return airlines[_address].isRegistered;
         // return (
             // airlines[airlineAddress].isRegistered,
         //     testme,
-        //     airlines[airlineAddress].paidValue,
+        //     airlines[airlineAddress].fundAmount,
         //     airlineAddress
         // );
         // return true; 
@@ -197,13 +220,13 @@ contract FlightSuretyData {
                     returns (bool,uint256,string,address)
     {
         // airlines[airlineAddress].isRegistered = true;
-        // airlines[airlineAddress].paidValue = 10;
+        // airlines[airlineAddress].fundAmount = 10;
         // airlines[airlineAddress].isRegistered = true;
         // return airlines[airlineAddress].isRegistered;
         return  
             (
                 airlines[_address].isRegistered,
-                airlines[_address].paidValue,
+                airlines[_address].fundAmount,
                 airlines[_address].airlineName,                
                 airlines[_address].airlineAddress
             );

@@ -42,6 +42,45 @@ export default class Contract {
             .call({ from: self.owner }, callback);
     }
 
+    getAirlinesAdresses(callback) {
+        let self = this;
+        debugger;
+
+        //TODO: TO CONFIGURE flightSuretyData.getAirlinesAdresses
+
+        self.flightSuretyApp.methods
+            .getAirlinesAdresses()
+            .call({ from: self.owner }, callback);
+
+    }
+    createAirline(_address, string _name, callback) {
+        let self = this;
+        debugger;
+        self.flightSuretyApp.methods
+            // .registerAirline(v1, { from: self.owner });
+            .registerAirline(_address)
+            .send({ from: self.owner, gas: 5555555 }, (error, result) => {
+                callback(_address);
+            });
+        // .registerAirline.call(_airlineAddress, callback(_airlineAddress));
+        //callback(_address);
+    }
+
+
+
+    registerAirline(_address, callback) {
+        let self = this;
+        debugger;
+        self.flightSuretyApp.methods
+            // .registerAirline(v1, { from: self.owner });
+            .registerAirline(_address)
+            .send({ from: self.owner, gas: 5555555 }, (error, result) => {
+                callback(_address);
+            });
+        // .registerAirline.call(_airlineAddress, callback(_airlineAddress));
+        //callback(_address);
+    }
+
     fetchFlightStatus(flight, callback) {
         let self = this;
         //TODO: TO CONFIGURE flightSuretyData.fetchFlightStatus
