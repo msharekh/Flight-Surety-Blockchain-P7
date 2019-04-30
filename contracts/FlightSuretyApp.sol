@@ -255,6 +255,29 @@ contract FlightSuretyApp {
          return flightsList;
     }
 
+    function getFlight
+                    (
+                        bytes32 key
+                    )
+                    external
+                    view                     
+                    // returns (bool,uint256,string,address)
+                    returns (address ,
+                                string ,
+                                uint256 ,
+                                uint8 )
+    {
+        
+        return  
+            (
+                flights[key].airline,
+                flights[key].flight,
+                flights[key].updatedTimestamp,
+                flights[key].statusCode
+            );
+        // return true; 
+        // return false;
+    }
 
     /**
     * @dev Register a future flight for insuring.

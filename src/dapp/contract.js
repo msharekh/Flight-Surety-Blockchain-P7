@@ -73,6 +73,19 @@ export default class Contract {
         // callback();
     }
 
+    getFlight(_key, callback) {
+        let self = this;
+        //debugger;
+        self.flightSuretyApp.methods
+            .getFlight(_key)
+            .call({ from: self.owner }, callback);
+        // .send({ from: self.owner }, (error, result) => {
+        //     callback(result);
+        // });
+        //     .call({ from: self.owner }, callback);
+        // callback();
+    }
+
     getAirlinesAdresses(callback) {
         let self = this;
         ////debugger;

@@ -148,6 +148,29 @@ import './flightsurety.css';
     });
     // get-airline
 
+
+    DOM.elid('get-flight').addEventListener('click', () => {
+        // let _address = DOM.elid('airlineAddress').value;
+        let _key = document.querySelector("#selFlights").value
+
+
+        contract.getFlight(_key, (error, result) => {
+            // //debugger;
+            console.log(error, result);
+            let html = `<p>airline:\t\t${result[0]}</p>
+                            <p>flight:\t\t${result[1]}</p>
+                            <p>updatedTimestamp:\t\t${result[2]}</p>
+                            <p>statusCode:\t\t${result[3].substr(0, 10)}</p>`
+            document.getElementById("airline-info").innerHTML = html;
+
+
+        });
+        // " airline-info"
+
+
+    });
+    // get-flight
+
     // User-submitted transaction
     DOM.elid('submit-oracle').addEventListener('click', () => {
         let flight = DOM.elid('flight-number').value;
