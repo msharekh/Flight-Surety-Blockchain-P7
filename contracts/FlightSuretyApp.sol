@@ -351,14 +351,14 @@ contract FlightSuretyApp {
     bytes32[] InsurancesList;
 
 
-    function buyInsurance(bytes32 _flightKey,address _passengerAddress)  {
+    function payInsurance(bytes32 _flightKey,address _passengerAddress) external  {
 
         bytes32 key = keccak256(abi.encodePacked(_flightKey, _passengerAddress)); 
 
 		// Insurances[key].price=price;
 		Insurances[key].flightKey=_flightKey;
 		Insurances[key].passengerAddress=_passengerAddress;
-		Insurances[key].isClaimed=false;
+		Insurances[key].isClaimed=true;
 
         numberOfInsurances += 1;
         InsurancesList.push(key);

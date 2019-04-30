@@ -126,12 +126,12 @@ export default class Contract {
     }
 
     // flight,airline,timestamp,statusCode
-    buyInsurance(flightKey, passengerAddress, callback) {
+    payInsurance(flightKey, passengerAddress, callback) {
         let self = this;
         debugger;
         self.flightSuretyApp.methods
             // .registerAirline(v1, { from: self.owner });
-            .buyInsurance(flightKey, passengerAddress)
+            .payInsurance(flightKey, passengerAddress)
             .send({ from: self.owner, gas: 5555555 }, (error, result) => {
                 debugger
                 callback(flightKey);

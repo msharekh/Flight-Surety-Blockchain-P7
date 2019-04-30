@@ -137,13 +137,13 @@ import './flightsurety.css';
 
     DOM.elid('create-insurance').addEventListener('click', () => {
 
-
+        debugger;
         // bytes32 flightKey,address passengerAddress,uint price
         let flightKey = document.querySelector("#selFlights").value
         let passengerAddress = document.querySelector("#selGetPassengersAdresses").value
         let price = 5;
         //debugger;
-        contract.buyInsurance(flightKey, passengerAddress, ((error, v) => {
+        contract.payInsurance(flightKey, passengerAddress, ((error, v) => {
             // display('Oracles', 'Trigger oracles', [{ label: 'Fetch Flight Status', error: error, value: result.flight + ' ' + result.timestamp }]);
             debugger;
             console.log('v', ':	', v);
@@ -161,7 +161,7 @@ import './flightsurety.css';
 
     });
 
-    // buyInsurance
+    // payInsurance
 
     DOM.elid('get-airline').addEventListener('click', () => {
         // let _address = DOM.elid('airlineAddress').value;
@@ -236,7 +236,7 @@ import './flightsurety.css';
     });
     // get-flight
 
-    getInsurance
+    //getInsurance
 
     // User-submitted transaction
     DOM.elid('submit-oracle').addEventListener('click', () => {
