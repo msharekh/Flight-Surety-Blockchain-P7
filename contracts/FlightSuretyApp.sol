@@ -400,17 +400,8 @@ contract FlightSuretyApp {
 contract FlightSuretyData{
 
     function isOperational() public view returns(bool);
-
     function registerAirline(address _address) external;
-                            // view                     
-                            // returns (bool);
     function getAirlinesAdresses() external view returns (address[]);
     function createAirline(address _address,string _name) external;
-    function getAirline
-                    (
-                        address _address
-                    )
-                    external
-                    view                     
-                    returns (bool,uint256,string,address);
+    function getAirline(address _address) external view returns (bool,uint256,string,address);
 }

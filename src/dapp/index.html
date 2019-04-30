@@ -43,44 +43,57 @@
                 <h3>
                     Airlines
                 </h3>
-                <p>create an airline</p>
-                <form role="form">
-                    <!-- <div class="form-group">
+                <div class="row">
+                    <div class="col-md-6">
+                        <form role="form">
+                            <!-- <div class="form-group">
+                        
+                                                <label for="strAirlineName">
+                                                    Name
+                                                </label>
+                                                <input type="text" class="form-control" id="airlineName" />
+                        
+                                            </div> -->
+                            <!-- form-group -->
 
-                        <label for="strAirlineName">
-                            Name
-                        </label>
-                        <input type="text" class="form-control" id="airlineName" />
+                            <div class="form-group">
 
-                    </div> -->
-                    <!-- form-group -->
+                                <label for="airlineAddress">
+                                    Address
+                                </label>
+                                <input type="text" class="form-control" id="airlineAddress" />
 
-                    <div class="form-group">
+                            </div>
+                            <!-- form-group -->
 
-                        <label for="strAirlineAddress">
-                            Address
-                        </label>
-                        <input type="text" class="form-control" id="airlineAddress" />
 
+                            <btn class="btn btn-primary" id="create-airline">create airline</btn>
+                            <btn class="btn btn-primary" id="register-airline">register airline</btn>
+                            <div class="form-group">
+
+                                <label for="fundValue">
+                                    Amount
+                                </label>
+                                <input type="number" class="form-control" id="fundValue" />
+
+                            </div>
+                            <!-- form-group -->
+                            <btn class="btn btn-primary" id="fund-airline">fund airline</btn>
+
+
+                        </form>
                     </div>
-                    <!-- form-group -->
-                    <!-- <div class="form-group">
+                    <!-- col-md-6 -->
+                    <div class="col-md-6">
+                        <select name="" id="selGetAirlinesAdresses"></select>
+                        <btn class="btn btn-primary" id="get-airline">get airline</btn>
 
-                        <label for="numFundValue">
-                            Amount
-                        </label>
-                        <input type="number" class="form-control" id="fundValue" />
+                        <div id="airline-info"></div>
+                    </div>
+                    <!-- col-md-6 -->
+                </div>
 
-                    </div> -->
-                    <!-- form-group -->
 
-                    <btn class="btn btn-primary" id="create-airline">create airline</btn>
-                    <select name="" id="selGetAirlinesAdresses"></select>
-                    <btn class="btn btn-primary" id="get-airline">get airline</btn>
-                    <btn class="btn btn-primary" id="register-airline">register airline</btn>
-
-                    <div id="airline-info"></div>
-                </form>
             </div>
             <!-- col-md-12 -->
 

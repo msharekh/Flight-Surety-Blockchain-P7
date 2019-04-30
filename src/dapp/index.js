@@ -100,22 +100,23 @@ import './flightsurety.css';
     // register airline
     DOM.elid('register-airline').addEventListener('click', () => {
         // let _airlineName = DOM.elid('airlineName').value;
-        let _airlineAddress = DOM.elid('airlineAddress').value;
+        let _address = document.querySelector("#selGetAirlinesAdresses").value
+
         //debugger;
 
 
-        // function registerAirline(_airlineAddress, (v) => {
+        // function registerAirline(_address, (v) => {
         // });
 
 
         // Write transaction
-        contract.registerAirline(_airlineAddress, (v) => {
+        contract.registerAirline(_address, (v) => {
             // display('Oracles', 'Trigger oracles', [{ label: 'Fetch Flight Status', error: error, value: result.flight + ' ' + result.timestamp }]);
             //debugger;
-            console.log('_airlineAddress', ':	', v);
+            console.log('_address', ':	', v);
 
             // Read transaction getAirlinesAdresses
-            contract.getAirlinesAdresses((error, result) => {
+            /* contract.getAirlinesAdresses((error, result) => {
                 //debugger;
                 console.log(error, result);
                 clearList("selGetAirlinesAdresses");
@@ -125,7 +126,7 @@ import './flightsurety.css';
                     showInList("selGetAirlinesAdresses", result[i], i);
                 }
 
-            });
+            }); */
 
         });
     })

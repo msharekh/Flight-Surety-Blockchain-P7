@@ -44,7 +44,7 @@ export default class Contract {
     // bool,uint256,string,address
     getAirline(_address, callback) {
         let self = this;
-        //debugger;
+        debugger;
         self.flightSuretyApp.methods
             .getAirline(_address)
             .call({ from: self.owner }, callback);
