@@ -44,7 +44,7 @@ export default class Contract {
     // bool,uint256,string,address
     getAirline(_address, callback) {
         let self = this;
-        debugger;
+        //debugger;
         self.flightSuretyApp.methods
             .getAirline(_address)
             .call({ from: self.owner }, callback);
@@ -57,7 +57,7 @@ export default class Contract {
 
     getAirlinesAdresses(callback) {
         let self = this;
-        debugger;
+        //debugger;
 
         //TODO: TO CONFIGURE flightSuretyData.getAirlinesAdresses
 
@@ -68,7 +68,7 @@ export default class Contract {
     }
     createAirline(_address, _name, callback) {
         let self = this;
-        debugger;
+        //debugger;
         self.flightSuretyApp.methods
             // .registerAirline(v1, { from: self.owner });
             .createAirline(_address, _name)
@@ -83,7 +83,7 @@ export default class Contract {
 
     registerAirline(_address, callback) {
         let self = this;
-        debugger;
+        //debugger;
         self.flightSuretyApp.methods
             // .registerAirline(v1, { from: self.owner });
             .registerAirline(_address)

@@ -13,14 +13,14 @@ import './flightsurety.css';
         // Read transaction
         contract.isOperational((error, result) => {
             console.log(error, result);
-            // debugger;
+            // //debugger;
             display('Operational Status', 'Check if contract is operational', [{ label: 'Operational Status', error: error, value: result }]);
         });
 
 
         // Read transaction getAirlinesAdresses
         contract.getAirlinesAdresses((error, result) => {
-            debugger;
+            //debugger;
             console.log(error, result);
             clearList("selGetAirlinesAdresses");
             for (let i = 0; i < result.length; i++) {
@@ -38,16 +38,16 @@ import './flightsurety.css';
             // Write createAirline
             contract.createAirline(_address, _name, (v) => {
                 // display('Oracles', 'Trigger oracles', [{ label: 'Fetch Flight Status', error: error, value: result.flight + ' ' + result.timestamp }]);
-                debugger;
+                //debugger;
                 console.log('v', ':	', v);
 
                 // Read transaction getAirlinesAdresses
                 contract.getAirlinesAdresses((error, result) => {
-                    debugger;
+                    //debugger;
                     console.log(error, result);
                     clearList("selGetAirlinesAdresses");
                     for (let i = 0; i < result.length; i++) {
-                        debugger;
+                        //debugger;
                         console.log(` ${i} - ${result[i]}`);
                         showInList("selGetAirlinesAdresses", result[i], i);
                     }
@@ -60,18 +60,24 @@ import './flightsurety.css';
 
 
         DOM.elid('get-airline').addEventListener('click', () => {
-            let _address = DOM.elid('airlineAddress').value;
+            // let _address = DOM.elid('airlineAddress').value;
+            let _address = document.querySelector("#selGetAirlinesAdresses").value
 
             // Write createAirline
             // contract.getAirline(_address, (v) => {
             //     // display('Oracles', 'Trigger oracles', [{ label: 'Fetch Flight Status', error: error, value: result.flight + ' ' + result.timestamp }]);
-            //      debugger;
+            //      //debugger;
             //         console.log(error, result);
             //     console.log('getAirline v', ':	', v);
 
             contract.getAirline(_address, (error, result) => {
                 debugger;
                 console.log(error, result);
+                let html = `  <p>registered:\t\t${result[0]}</p>
+                            <p>fund Amount:\t\t${result[1]}</p>
+                            <p>airline Name:\t\t${result[2]}</p>
+                            <p>airline Address:\t\t${result[3]}</p>`
+                document.getElementById("airline-info").innerHTML = html;
 
 
             });
@@ -95,7 +101,7 @@ import './flightsurety.css';
     DOM.elid('register-airline').addEventListener('click', () => {
         // let _airlineName = DOM.elid('airlineName').value;
         let _airlineAddress = DOM.elid('airlineAddress').value;
-        debugger;
+        //debugger;
 
 
         // function registerAirline(_airlineAddress, (v) => {
@@ -105,16 +111,16 @@ import './flightsurety.css';
         // Write transaction
         contract.registerAirline(_airlineAddress, (v) => {
             // display('Oracles', 'Trigger oracles', [{ label: 'Fetch Flight Status', error: error, value: result.flight + ' ' + result.timestamp }]);
-            debugger;
+            //debugger;
             console.log('_airlineAddress', ':	', v);
 
             // Read transaction getAirlinesAdresses
             contract.getAirlinesAdresses((error, result) => {
-                debugger;
+                //debugger;
                 console.log(error, result);
                 clearList("selGetAirlinesAdresses");
                 for (let i = 0; i < result.length; i++) {
-                    debugger;
+                    //debugger;
                     console.log(` ${i} - ${result[i]}`);
                     showInList("selGetAirlinesAdresses", result[i], i);
                 }
