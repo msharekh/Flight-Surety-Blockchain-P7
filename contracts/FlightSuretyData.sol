@@ -42,20 +42,20 @@ contract FlightSuretyData {
         
         airlinesAdresses.push(contractOwner);
         
-        airlinesAdresses.push("0x18495d2af425d56005812644136bf68282188aea");
-        airlinesAdresses.push("0xc61c9dadd04970bcd7802ecebf758f87b1e35d15");
-        airlinesAdresses.push("0xa513e91f2aaa5ec9b9b4815f44494fb323ae8a08");
-        airlinesAdresses.push("0xd64f959e7f9060e034c0fc9d61c5bc0b71e0d38c");
+        // airlinesAdresses.push("0x18495d2af425d56005812644136bf68282188aea");
+        // airlinesAdresses.push("0xc61c9dadd04970bcd7802ecebf758f87b1e35d15");
+        // airlinesAdresses.push("0xa513e91f2aaa5ec9b9b4815f44494fb323ae8a08");
+        // airlinesAdresses.push("0xd64f959e7f9060e034c0fc9d61c5bc0b71e0d38c");
          
          
         // We know the length of the array
-        uint cnt = airlinesAdresses.length;
-        for (uint i=0; i<cnt; i++) {
-            airlines[airlinesAdresses[i]].isRegistered = false;
-            airlines[airlinesAdresses[i]].fundAmount = 0;
-            airlines[airlinesAdresses[i]].airlineName = appendUintToString("Airline-" , i);           
-            airlines[airlinesAdresses[i]].airlineAddress = airlinesAdresses[i];
-        }
+        // uint cnt = airlinesAdresses.length;
+        // for (uint i=0; i<cnt; i++) {
+        //     airlines[airlinesAdresses[i]].isRegistered = false;
+        //     airlines[airlinesAdresses[i]].fundAmount = 0;
+        //     airlines[airlinesAdresses[i]].airlineName = "Airline-" ;        
+        //     airlines[airlinesAdresses[i]].airlineAddress = airlinesAdresses[i];
+        // }
     
     }
 
@@ -154,7 +154,7 @@ contract FlightSuretyData {
 
     function createAirline
                             (  
-                                address _address 
+                                address _address ,
                                 string _name 
                             )
                             external                              
@@ -217,6 +217,7 @@ contract FlightSuretyData {
                     )
                     external
                     view                     
+                    // returns (bool,uint256,string,address)
                     returns (bool,uint256,string,address)
     {
         // airlines[airlineAddress].isRegistered = true;

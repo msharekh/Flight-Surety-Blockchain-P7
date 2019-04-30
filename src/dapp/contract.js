@@ -41,6 +41,19 @@ export default class Contract {
             .isOperational()
             .call({ from: self.owner }, callback);
     }
+    // bool,uint256,string,address
+    getAirline(_address, callback) {
+        let self = this;
+        debugger;
+        self.flightSuretyApp.methods
+            .getAirline(_address)
+            .call({ from: self.owner }, callback);
+        // .send({ from: self.owner }, (error, result) => {
+        //     callback(result);
+        // });
+        //     .call({ from: self.owner }, callback);
+        // callback();
+    }
 
     getAirlinesAdresses(callback) {
         let self = this;
@@ -53,12 +66,12 @@ export default class Contract {
             .call({ from: self.owner }, callback);
 
     }
-    createAirline(_address, string _name, callback) {
+    createAirline(_address, _name, callback) {
         let self = this;
         debugger;
         self.flightSuretyApp.methods
             // .registerAirline(v1, { from: self.owner });
-            .registerAirline(_address)
+            .createAirline(_address, _name)
             .send({ from: self.owner, gas: 5555555 }, (error, result) => {
                 callback(_address);
             });

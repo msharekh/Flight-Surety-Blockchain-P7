@@ -123,12 +123,13 @@ contract FlightSuretyApp {
     */   
     function createAirline
                             (  
-                                address _address 
+                                address _address ,
+                                string _name 
                             )
                             external                              
     {
          // return   true;
-        flightSuretyData.createAirline(_address);
+        flightSuretyData.createAirline(_address,_name);
         // return (success, 0);
     }
 
@@ -156,6 +157,16 @@ contract FlightSuretyApp {
          return flightSuretyData.getAirlinesAdresses();
     }
 
+    function getAirline
+                    (
+                        address _address
+                    )
+                    external
+                    view                     
+                    returns (bool,uint256,string,address) {
+
+     return   flightSuretyData.getAirline(_address);
+    }
 
    /**
     * @dev Register a future flight for insuring.
@@ -395,5 +406,11 @@ contract FlightSuretyData{
                             // returns (bool);
     function getAirlinesAdresses() external view returns (address[]);
     function createAirline(address _address,string _name) external;
-     
+    function getAirline
+                    (
+                        address _address
+                    )
+                    external
+                    view                     
+                    returns (bool,uint256,string,address);
 }

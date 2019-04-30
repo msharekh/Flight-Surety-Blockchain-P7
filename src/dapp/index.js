@@ -30,32 +30,16 @@ import './flightsurety.css';
 
         });
 
-        // User-submitted transaction
-        DOM.elid('submit-oracle').addEventListener('click', () => {
-            let flight = DOM.elid('flight-number').value;
-            // Write transaction
-            contract.fetchFlightStatus(flight, (error, result) => {
-                display('Oracles', 'Trigger oracles', [{ label: 'Fetch Flight Status', error: error, value: result.flight + ' ' + result.timestamp }]);
-            });
-        })
-
-        // register airline
-        DOM.elid('register-airline').addEventListener('click', () => {
-            // let _airlineName = DOM.elid('airlineName').value;
-            let _airlineAddress = DOM.elid('airlineAddress').value;
-            debugger;
-
-
-            // function registerAirline(_airlineAddress, (v) => {
-            // });
-
-
-            // Write transaction
-            contract.registerAirline(_airlineAddress, (v) => {
+        //create 4 airlines without registrations
+        DOM.elid('create-airline').addEventListener('click', () => {
+            let _address = DOM.elid('airlineAddress').value;
+            // let _address = "0x18495d2af425d56005812644136bf68282188aea"
+            let _name = `Airline - ${_address.substr(2, 4)}`
+            // Write createAirline
+            contract.createAirline(_address, _name, (v) => {
                 // display('Oracles', 'Trigger oracles', [{ label: 'Fetch Flight Status', error: error, value: result.flight + ' ' + result.timestamp }]);
                 debugger;
-                contract.registerAirline
-                console.log('_airlineAddress', ':	', v);
+                console.log('v', ':	', v);
 
                 // Read transaction getAirlinesAdresses
                 contract.getAirlinesAdresses((error, result) => {
@@ -72,8 +56,75 @@ import './flightsurety.css';
 
             });
         })
+        // create-airline
 
-    });
+
+        DOM.elid('get-airline').addEventListener('click', () => {
+            let _address = DOM.elid('airlineAddress').value;
+
+            // Write createAirline
+            // contract.getAirline(_address, (v) => {
+            //     // display('Oracles', 'Trigger oracles', [{ label: 'Fetch Flight Status', error: error, value: result.flight + ' ' + result.timestamp }]);
+            //      debugger;
+            //         console.log(error, result);
+            //     console.log('getAirline v', ':	', v);
+
+            contract.getAirline(_address, (error, result) => {
+                debugger;
+                console.log(error, result);
+
+
+            });
+            // " airline-info"
+
+
+        });
+    })
+    // get-airline
+
+    // User-submitted transaction
+    DOM.elid('submit-oracle').addEventListener('click', () => {
+        let flight = DOM.elid('flight-number').value;
+        // Write transaction
+        contract.fetchFlightStatus(flight, (error, result) => {
+            display('Oracles', 'Trigger oracles', [{ label: 'Fetch Flight Status', error: error, value: result.flight + ' ' + result.timestamp }]);
+        });
+    })
+
+    // register airline
+    DOM.elid('register-airline').addEventListener('click', () => {
+        // let _airlineName = DOM.elid('airlineName').value;
+        let _airlineAddress = DOM.elid('airlineAddress').value;
+        debugger;
+
+
+        // function registerAirline(_airlineAddress, (v) => {
+        // });
+
+
+        // Write transaction
+        contract.registerAirline(_airlineAddress, (v) => {
+            // display('Oracles', 'Trigger oracles', [{ label: 'Fetch Flight Status', error: error, value: result.flight + ' ' + result.timestamp }]);
+            debugger;
+            console.log('_airlineAddress', ':	', v);
+
+            // Read transaction getAirlinesAdresses
+            contract.getAirlinesAdresses((error, result) => {
+                debugger;
+                console.log(error, result);
+                clearList("selGetAirlinesAdresses");
+                for (let i = 0; i < result.length; i++) {
+                    debugger;
+                    console.log(` ${i} - ${result[i]}`);
+                    showInList("selGetAirlinesAdresses", result[i], i);
+                }
+
+            });
+
+        });
+    })
+    // register-airline
+
 
 
 })();
