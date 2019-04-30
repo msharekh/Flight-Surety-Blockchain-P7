@@ -85,13 +85,22 @@ export default class Contract {
         let self = this;
         //debugger;
         self.flightSuretyApp.methods
-            // .registerAirline(v1, { from: self.owner });
             .registerAirline(_address)
             .send({ from: self.owner, gas: 5555555 }, (error, result) => {
                 callback(_address);
             });
-        // .registerAirline.call(_airlineAddress, callback(_airlineAddress));
-        //callback(_address);
+
+    }
+
+    fundAirline(_address, callback) {
+        let self = this;
+        //debugger;
+        self.flightSuretyApp.methods
+            .fundAirline(_address)
+            .send({ from: self.owner, gas: 5555555 }, (error, result) => {
+                callback(_address);
+            });
+
     }
 
     fetchFlightStatus(flight, callback) {

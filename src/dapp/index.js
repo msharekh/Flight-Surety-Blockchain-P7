@@ -30,62 +30,60 @@ import './flightsurety.css';
 
         });
 
-        //create 4 airlines without registrations
-        DOM.elid('create-airline').addEventListener('click', () => {
-            let _address = DOM.elid('airlineAddress').value;
-            // let _address = "0x18495d2af425d56005812644136bf68282188aea"
-            let _name = `Airline - ${_address.substr(2, 4)}`
-            // Write createAirline
-            contract.createAirline(_address, _name, (v) => {
-                // display('Oracles', 'Trigger oracles', [{ label: 'Fetch Flight Status', error: error, value: result.flight + ' ' + result.timestamp }]);
+
+
+
+
+    })
+
+    //create 4 airlines without registrations
+    DOM.elid('create-airline').addEventListener('click', () => {
+        let _address = DOM.elid('airlineAddress').value;
+        // let _address = "0x18495d2af425d56005812644136bf68282188aea"
+        let _name = `Airline - ${_address.substr(2, 4)}`
+        // Write createAirline
+        contract.createAirline(_address, _name, (v) => {
+            // display('Oracles', 'Trigger oracles', [{ label: 'Fetch Flight Status', error: error, value: result.flight + ' ' + result.timestamp }]);
+            //debugger;
+            console.log('v', ':	', v);
+
+            // Read transaction getAirlinesAdresses
+            contract.getAirlinesAdresses((error, result) => {
                 //debugger;
-                console.log('v', ':	', v);
-
-                // Read transaction getAirlinesAdresses
-                contract.getAirlinesAdresses((error, result) => {
-                    //debugger;
-                    console.log(error, result);
-                    clearList("selGetAirlinesAdresses");
-                    for (let i = 0; i < result.length; i++) {
-                        //debugger;
-                        console.log(` ${i} - ${result[i]}`);
-                        showInList("selGetAirlinesAdresses", result[i], i);
-                    }
-
-                });
-
-            });
-        })
-        // create-airline
-
-
-        DOM.elid('get-airline').addEventListener('click', () => {
-            // let _address = DOM.elid('airlineAddress').value;
-            let _address = document.querySelector("#selGetAirlinesAdresses").value
-
-            // Write createAirline
-            // contract.getAirline(_address, (v) => {
-            //     // display('Oracles', 'Trigger oracles', [{ label: 'Fetch Flight Status', error: error, value: result.flight + ' ' + result.timestamp }]);
-            //      //debugger;
-            //         console.log(error, result);
-            //     console.log('getAirline v', ':	', v);
-
-            contract.getAirline(_address, (error, result) => {
-                debugger;
                 console.log(error, result);
-                let html = `  <p>registered:\t\t${result[0]}</p>
-                            <p>fund Amount:\t\t${result[1]}</p>
-                            <p>airline Name:\t\t${result[2]}</p>
-                            <p>airline Address:\t\t${result[3]}</p>`
-                document.getElementById("airline-info").innerHTML = html;
-
+                clearList("selGetAirlinesAdresses");
+                for (let i = 0; i < result.length; i++) {
+                    //debugger;
+                    console.log(` ${i} - ${result[i]}`);
+                    showInList("selGetAirlinesAdresses", result[i], i);
+                }
 
             });
-            // " airline-info"
-
 
         });
     })
+    // create-airline
+
+    DOM.elid('get-airline').addEventListener('click', () => {
+        // let _address = DOM.elid('airlineAddress').value;
+        let _address = document.querySelector("#selGetAirlinesAdresses").value
+
+
+        contract.getAirline(_address, (error, result) => {
+            // debugger;
+            console.log(error, result);
+            let html = `<p>registered:\t\t${result[0]}</p>
+                            <p>funded:\t\t${result[1]}</p>
+                            <p>airline Name:\t\t${result[2]}</p>
+                            <p>airline Address:\t\t${result[3]}</p>`
+            document.getElementById("airline-info").innerHTML = html;
+
+
+        });
+        // " airline-info"
+
+
+    });
     // get-airline
 
     // User-submitted transaction
@@ -97,42 +95,31 @@ import './flightsurety.css';
         });
     })
 
-    // register airline
+    /************** register airline ***************/
     DOM.elid('register-airline').addEventListener('click', () => {
         // let _airlineName = DOM.elid('airlineName').value;
         let _address = document.querySelector("#selGetAirlinesAdresses").value
 
-        //debugger;
-
-
-        // function registerAirline(_address, (v) => {
-        // });
-
-
         // Write transaction
         contract.registerAirline(_address, (v) => {
-            // display('Oracles', 'Trigger oracles', [{ label: 'Fetch Flight Status', error: error, value: result.flight + ' ' + result.timestamp }]);
             //debugger;
             console.log('_address', ':	', v);
-
-            // Read transaction getAirlinesAdresses
-            /* contract.getAirlinesAdresses((error, result) => {
-                //debugger;
-                console.log(error, result);
-                clearList("selGetAirlinesAdresses");
-                for (let i = 0; i < result.length; i++) {
-                    //debugger;
-                    console.log(` ${i} - ${result[i]}`);
-                    showInList("selGetAirlinesAdresses", result[i], i);
-                }
-
-            }); */
-
         });
     })
     // register-airline
 
-
+    /************** fund airline ***************/
+    DOM.elid('fund-airline').addEventListener('click', () => {
+        // let _airlineName = DOM.elid('airlineName').value;
+        let _address = document.querySelector("#selGetAirlinesAdresses").value
+        debugger;
+        // Write transaction
+        contract.fundAirline(_address, (v) => {
+            //debugger;
+            console.log('_address', ':	', v);
+        });
+    })
+    // fund-airline
 
 })();
 

@@ -36,7 +36,7 @@ contract FlightSuretyData {
         // airlines[contractOwner].airlineAddress=contractOwner;
         
         airlines[contractOwner].isRegistered = true;
-        airlines[contractOwner].fundAmount = 5;
+        airlines[contractOwner].isFunded = true;
         airlines[contractOwner].airlineName = "SAUDI AIRLINES";           
         airlines[contractOwner].airlineAddress = contractOwner;
         
@@ -52,7 +52,7 @@ contract FlightSuretyData {
         // uint cnt = airlinesAdresses.length;
         // for (uint i=0; i<cnt; i++) {
         //     airlines[airlinesAdresses[i]].isRegistered = false;
-        //     airlines[airlinesAdresses[i]].fundAmount = 0;
+        //     airlines[airlinesAdresses[i]].isFunded = 0;
         //     airlines[airlinesAdresses[i]].airlineName = "Airline-" ;        
         //     airlines[airlinesAdresses[i]].airlineAddress = airlinesAdresses[i];
         // }
@@ -88,7 +88,7 @@ contract FlightSuretyData {
     }
 
     modifier requireIsFunded(address _address) {
-        require(airlines[_address].fundAmount >= 10, "Airline is not funded with at least 10 Ethers");
+        require(airlines[_address].isFunded , "Airline should be funded");
         _;
     }
     /********************************************************************************************/
@@ -144,7 +144,7 @@ contract FlightSuretyData {
  /* -----------Airline--------------- */
     struct Airline {
         bool isRegistered;
-        uint256 fundAmount;
+        bool isFunded;
         string airlineName;                 
         address airlineAddress;
     }
@@ -159,7 +159,8 @@ contract FlightSuretyData {
                             )
                             external                              
     {
-        airlines[_address].fundAmount = 0;
+        airlines[_address].isRegistered = false;
+        airlines[_address].isFunded = false;
         airlines[_address].airlineName =_name;           
         airlines[_address].airlineAddress=_address;
         
@@ -179,10 +180,23 @@ contract FlightSuretyData {
                             
     { 
         airlines[_address].isRegistered = true;
-        
+     }
 
-        // return airlines[_address].isRegistered;
-    }
+     /**
+    * @dev Add an airline to the registration queue
+    *      Can only be called from FlightSuretyApp contract
+    *
+    */   
+    function fundAirline
+                            (   
+                                address _address
+                            )
+                            external                             
+                            
+    { 
+        airlines[_address].isFunded = true;
+     }
+
 
     function getAirlinesAdresses() external view returns (address[]) {
          return airlinesAdresses;
@@ -198,13 +212,13 @@ contract FlightSuretyData {
                     returns (bool)
     {
         // airlines[airlineAddress].isRegistered = true;
-        // airlines[airlineAddress].fundAmount = 10;
+        // airlines[airlineAddress].isFunded = 10;
         // airlines[airlineAddress].isRegistered = true;
         return airlines[_address].isRegistered;
         // return (
             // airlines[airlineAddress].isRegistered,
         //     testme,
-        //     airlines[airlineAddress].fundAmount,
+        //     airlines[airlineAddress].isFunded,
         //     airlineAddress
         // );
         // return true; 
@@ -218,16 +232,16 @@ contract FlightSuretyData {
                     external
                     view                     
                     // returns (bool,uint256,string,address)
-                    returns (bool,uint256,string,address)
+                    returns (bool,bool,string,address)
     {
         // airlines[airlineAddress].isRegistered = true;
-        // airlines[airlineAddress].fundAmount = 10;
+        // airlines[airlineAddress].isFunded = 10;
         // airlines[airlineAddress].isRegistered = true;
         // return airlines[airlineAddress].isRegistered;
         return  
             (
                 airlines[_address].isRegistered,
-                airlines[_address].fundAmount,
+                airlines[_address].isFunded,
                 airlines[_address].airlineName,                
                 airlines[_address].airlineAddress
             );
@@ -277,7 +291,8 @@ contract FlightSuretyData {
     *
     */   
     function fund
-                            (   
+                            (  
+
                             )
                             public
                             payable

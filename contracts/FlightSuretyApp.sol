@@ -153,6 +153,15 @@ contract FlightSuretyApp {
         // return (success, 0);
     }
 
+    function fundAirline
+                            (   
+                                address _address
+                            )
+                            external
+    {
+        flightSuretyData.fundAirline(_address);
+    }
+
     function getAirlinesAdresses() external view returns (address[]) {
          return flightSuretyData.getAirlinesAdresses();
     }
@@ -404,4 +413,5 @@ contract FlightSuretyData{
     function getAirlinesAdresses() external view returns (address[]);
     function createAirline(address _address,string _name) external;
     function getAirline(address _address) external view returns (bool,uint256,string,address);
+    function fundAirline( address _address) external;
 }
