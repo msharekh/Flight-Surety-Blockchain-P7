@@ -207,6 +207,18 @@ let flightSuretyData = await FlightSuretyData.new();
 
 
  The app will encapsulate the data, therefore the app can be exposed to contract calls
+
+
+
+ So when i want to create an airline:
+I call the registerAirline from the app contract 
+It’ll do the logic (if airline are more than 4 or less) and then it’ll call the data contract and store the lines there in the mapping
+
+
+AppContract address msg.sender
+DataContract address msg.sender
+
+only users   tx.origin
         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
         my understanding:

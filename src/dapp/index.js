@@ -22,21 +22,26 @@ import './flightsurety.css';
         contract.getAirlinesAdresses((error, result) => {
             //debugger;
             console.log(error, result);
-            clearList("selGetAirlinesAdresses");
-            for (let i = 0; i < result.length; i++) {
-                console.log(` ${i} - ${result[i]}`);
-                showInList("selGetAirlinesAdresses", result[i], i);
-            }
+            updateDDLs("selGetAirlinesAdresses", result);
+
 
         });
 
 
 
+        // Read transaction getPassengers
+        contract.getPassengersAdresses((error, result) => {
+            debugger;
+            console.log(error, result);
+            updateDDLs("selGetPassengersAdresses", result);
+
+        });
+
 
 
     })
 
-    //create 4 airlines without registrations
+    //create airlines without registrations
     DOM.elid('create-airline').addEventListener('click', () => {
         let _address = DOM.elid('airlineAddress').value;
         // let _address = "0x18495d2af425d56005812644136bf68282188aea"
@@ -51,12 +56,7 @@ import './flightsurety.css';
             contract.getAirlinesAdresses((error, result) => {
                 //debugger;
                 console.log(error, result);
-                clearList("selGetAirlinesAdresses");
-                for (let i = 0; i < result.length; i++) {
-                    //debugger;
-                    console.log(` ${i} - ${result[i]}`);
-                    showInList("selGetAirlinesAdresses", result[i], i);
-                }
+                updateDDLs("selGetAirlinesAdresses", result);
 
             });
 
@@ -64,6 +64,28 @@ import './flightsurety.css';
     })
     // create-airline
 
+
+    // createPassenger
+    DOM.elid('create-passenger').addEventListener('click', () => {
+        let _address = DOM.elid('passengerAddress').value;
+        contract.createPassenger(_address, (v) => {
+            // display('Oracles', 'Trigger oracles', [{ label: 'Fetch Flight Status', error: error, value: result.flight + ' ' + result.timestamp }]);
+            //debugger;
+            console.log('v', ':	', v);
+
+            // Read transaction getPassengers
+            contract.getPassengersAdresses((error, result) => {
+                debugger;
+                console.log(error, result);
+
+                updateDDLs(result);
+                updateDDLs("selGetPassengersAdresses", result);
+
+            });
+
+        });
+    })
+    // create-airline
     DOM.elid('get-airline').addEventListener('click', () => {
         // let _address = DOM.elid('airlineAddress').value;
         let _address = document.querySelector("#selGetAirlinesAdresses").value
@@ -121,7 +143,17 @@ import './flightsurety.css';
     })
     // fund-airline
 
+
+
 })();
+function updateDDLs(element, result) {
+    clearList(element);
+    for (let i = 0; i < result.length; i++) {
+        debugger;
+        console.log(`* ${i} - ${result[i]}`);
+        showInList(element, result[i], i);
+    }
+}
 
 function clearList(container) {
     // get reference to select element

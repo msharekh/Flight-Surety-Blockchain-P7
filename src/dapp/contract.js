@@ -41,7 +41,25 @@ export default class Contract {
             .isOperational()
             .call({ from: self.owner }, callback);
     }
+
+
+    /* ##########################################
+                    Airline
+        ########################################## */
     // bool,uint256,string,address
+    createAirline(_address, _name, callback) {
+        let self = this;
+        //debugger;
+        self.flightSuretyApp.methods
+            // .registerAirline(v1, { from: self.owner });
+            .createAirline(_address, _name)
+            .send({ from: self.owner, gas: 5555555 }, (error, result) => {
+                callback(_address);
+            });
+        // .registerAirline.call(_airlineAddress, callback(_airlineAddress));
+        //callback(_address);
+    }
+
     getAirline(_address, callback) {
         let self = this;
         debugger;
@@ -66,20 +84,6 @@ export default class Contract {
             .call({ from: self.owner }, callback);
 
     }
-    createAirline(_address, _name, callback) {
-        let self = this;
-        //debugger;
-        self.flightSuretyApp.methods
-            // .registerAirline(v1, { from: self.owner });
-            .createAirline(_address, _name)
-            .send({ from: self.owner, gas: 5555555 }, (error, result) => {
-                callback(_address);
-            });
-        // .registerAirline.call(_airlineAddress, callback(_airlineAddress));
-        //callback(_address);
-    }
-
-
 
     registerAirline(_address, callback) {
         let self = this;
@@ -91,6 +95,36 @@ export default class Contract {
             });
 
     }
+
+    /* ##########################################
+                    Pasenger
+        ########################################## */
+
+    createPassenger(_address, callback) {
+        let self = this;
+        debugger;
+        self.flightSuretyApp.methods
+            // .registerAirline(v1, { from: self.owner });
+            .createPassenger(_address)
+            .send({ from: self.owner, gas: 5555555 }, (error, result) => {
+                callback(_address);
+            });
+        // .registerAirline.call(_airlineAddress, callback(_airlineAddress));
+        //callback(_address);
+    }
+
+    getPassengersAdresses(callback) {
+        let self = this;
+        //debugger;
+
+        //TODO: TO CONFIGURE flightSuretyData.getAirlinesAdresses
+
+        self.flightSuretyApp.methods
+            .getPassengersAdresses()
+            .call({ from: self.owner }, callback);
+
+    }
+
 
     fundAirline(_address, callback) {
         let self = this;

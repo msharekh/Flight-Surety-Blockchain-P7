@@ -160,7 +160,7 @@ contract FlightSuretyData {
                             external                              
     {
         airlines[_address].isRegistered = false;
-        airlines[_address].isFunded = false;
+        airlines[_address].isFunded = true;
         airlines[_address].airlineName =_name;           
         airlines[_address].airlineAddress=_address;
         

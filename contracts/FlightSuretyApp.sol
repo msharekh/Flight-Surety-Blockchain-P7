@@ -51,7 +51,8 @@ contract FlightSuretyApp {
     modifier requireIsOperational() 
     {
          // Modify to call data contract's status
-        require(true, "Contract is currently not operational");  
+         
+        require(flightSuretyData.isOperational(), "Contract is currently not operational");  
         _;  // All modifiers require an "_" which indicates where the function body will be added
     }
 
@@ -177,6 +178,30 @@ contract FlightSuretyApp {
      return   flightSuretyData.getAirline(_address);
     }
 
+
+
+
+/* ##########################################
+            Pasenger
+########################################## */
+    
+
+    address[] passengersAdresses;
+
+    function createPassenger
+                            (  
+                                address _address 
+                            )
+                            external                              
+    {
+        passengersAdresses.push(_address);
+    }
+
+    function getPassengersAdresses() external view returns (address[]) {
+         return passengersAdresses;
+    }
+
+    /* ################### END #######################*/
    /**
     * @dev Register a future flight for insuring.
     *
