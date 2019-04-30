@@ -45,7 +45,14 @@ import './flightsurety.css';
 
         });
 
+        // Read transaction getPassengers
+        contract.getInsurances((error, result) => {
+            //debugger;
+            console.log(error, result);
 
+            updateDDLs("selInsurances", result, "Insurances");
+
+        });
 
     })
 
@@ -126,6 +133,36 @@ import './flightsurety.css';
     })
     // createPassenger
 
+
+
+    DOM.elid('create-insurance').addEventListener('click', () => {
+
+
+        // bytes32 flightKey,address passengerAddress,uint price
+        let flightKey = document.querySelector("#selFlights").value
+        let passengerAddress = document.querySelector("#selGetPassengersAdresses").value
+        let price = 5;
+        //debugger;
+        contract.buyInsurance(flightKey, passengerAddress, ((error, v) => {
+            // display('Oracles', 'Trigger oracles', [{ label: 'Fetch Flight Status', error: error, value: result.flight + ' ' + result.timestamp }]);
+            debugger;
+            console.log('v', ':	', v);
+
+            // Read transaction getPassengers
+            contract.getInsurances((error, result) => {
+                //debugger;
+                console.log(error, result);
+
+                updateDDLs("selInsurances", result, "Insurances");
+
+            });
+        }));
+
+
+    });
+
+    // buyInsurance
+
     DOM.elid('get-airline').addEventListener('click', () => {
         // let _address = DOM.elid('airlineAddress').value;
         let _address = document.querySelector("#selGetAirlinesAdresses").value
@@ -134,7 +171,8 @@ import './flightsurety.css';
         contract.getAirline(_address, (error, result) => {
             // //debugger;
             console.log(error, result);
-            let html = `<p>registered:\t\t${result[0]}</p>
+            let html = `    <h3>Information</h3>
+                            <p>registered:\t\t${result[0]}</p>
                             <p>funded:\t\t${result[1]}</p>
                             <p>airline Name:\t\t${result[2]}</p>
                             <p>airline Address:\t\t${result[3].substr(0, 10)}</p>`
@@ -157,10 +195,37 @@ import './flightsurety.css';
         contract.getFlight(_key, (error, result) => {
             // //debugger;
             console.log(error, result);
-            let html = `<p>airline:\t\t${result[0]}</p>
-                            <p>flight:\t\t${result[1]}</p>
-                            <p>updatedTimestamp:\t\t${result[2]}</p>
-                            <p>statusCode:\t\t${result[3].substr(0, 10)}</p>`
+            let html = `<h3>Information</h3>
+                        <p>airline:\t\t${result[0].substr(0, 10)}</p>
+                        <p>flight:\t\t${result[1]}</p>
+                        <p>updatedTimestamp:\t\t${result[2]}</p>
+                        <p>statusCode:\t\t${result[3].substr(0, 10)}</p>`;
+            document.getElementById("airline-info").innerHTML = html;
+
+
+        });
+        // " airline-info"
+
+
+    });
+    // get-Insurance
+    DOM.elid('get-insurance').addEventListener('click', () => {
+        // let _address = DOM.elid('airlineAddress').value;
+        let _key = document.querySelector("#selInsurances").value
+
+
+        contract.getInsurance(_key, (error, result) => {
+            // //debugger;
+            console.log(error, result);
+            // Insurances[key].price,
+            //     Insurances[key].flightKey,
+            //     Insurances[key].passengerAddress,
+            //     Insurances[key].isClaimed
+            let html = `<h3>Information</h3>
+                        <p>price:\t\t${result[0]}</p>
+                        <p>flightKey:\t\t${result[1]}</p>
+                        <p>passengerAddress:\t\t${result[2].substr(0, 10)}</p>
+                        <p>isClaimed:\t\t${result[3]}</p>`;
             document.getElementById("airline-info").innerHTML = html;
 
 
@@ -170,6 +235,8 @@ import './flightsurety.css';
 
     });
     // get-flight
+
+    getInsurance
 
     // User-submitted transaction
     DOM.elid('submit-oracle').addEventListener('click', () => {

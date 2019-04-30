@@ -337,6 +337,62 @@ contract FlightSuretyApp {
 // endregion
 
 
+// region INSURANCE
+/* ..........................................*/
+
+    uint8 numberOfInsurances;
+    struct Insurance {
+        bytes32 flightKey;
+        address passengerAddress;
+        uint price;
+        bool isClaimed;
+    }
+    mapping(bytes32 => Insurance) private Insurances;
+    bytes32[] InsurancesList;
+
+
+    function buyInsurance(bytes32 _flightKey,address _passengerAddress)  {
+
+        bytes32 key = keccak256(abi.encodePacked(_flightKey, _passengerAddress)); 
+
+		// Insurances[key].price=price;
+		Insurances[key].flightKey=_flightKey;
+		Insurances[key].passengerAddress=_passengerAddress;
+		Insurances[key].isClaimed=false;
+
+        numberOfInsurances += 1;
+        InsurancesList.push(key);
+ 	}
+
+     function getInsurances() external view returns (bytes32[]) {
+         return flightsList;
+    }
+
+    function getInsurance
+                    (
+                        bytes32 key
+                    )
+                    external
+                    view                     
+                    returns (uint ,
+                                bytes32 ,
+                                address ,
+                                bool )
+    {
+        
+        return  
+            (
+                Insurances[key].price,
+                Insurances[key].flightKey,
+                Insurances[key].passengerAddress,
+                Insurances[key].isClaimed
+            );
+        // return true; 
+        // return false;
+    }
+/* ..........................................*/
+// endregion
+
 // region ORACLE MANAGEMENT
 /* ..........................................*/
     // Incremented to add pseudo-randomness at various points

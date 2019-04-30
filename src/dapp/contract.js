@@ -125,6 +125,21 @@ export default class Contract {
         //callback(_address);
     }
 
+    // flight,airline,timestamp,statusCode
+    buyInsurance(flightKey, passengerAddress, callback) {
+        let self = this;
+        debugger;
+        self.flightSuretyApp.methods
+            // .registerAirline(v1, { from: self.owner });
+            .buyInsurance(flightKey, passengerAddress)
+            .send({ from: self.owner, gas: 5555555 }, (error, result) => {
+                debugger
+                callback(flightKey);
+            });
+        // .registerAirline.call(_airlineAddress, callback(_airlineAddress));
+        //callback(_address);
+    }
+
     getFlights(callback) {
         let self = this;
         debugger;
@@ -135,6 +150,32 @@ export default class Contract {
             .getFlights()
             .call({ from: self.owner }, callback);
 
+    }
+
+    getInsurances(callback) {
+        let self = this;
+        debugger;
+
+        //TODO: TO CONFIGURE flightSuretyData.getAirlinesAdresses
+
+        self.flightSuretyApp.methods
+            .getInsurances()
+            .call({ from: self.owner }, callback);
+
+    }
+
+
+    getInsurance(_key, callback) {
+        let self = this;
+        //debugger;
+        self.flightSuretyApp.methods
+            .getInsurance(_key)
+            .call({ from: self.owner }, callback);
+        // .send({ from: self.owner }, (error, result) => {
+        //     callback(result);
+        // });
+        //     .call({ from: self.owner }, callback);
+        // callback();
     }
 
     /* ##########################################
