@@ -13,6 +13,17 @@ contract FlightSuretyApp {
     using SafeMath for uint256; // Allow SafeMath functions to be called for all uint256 types (similar to "prototype" in Javascript)
 
     FlightSuretyData flightSuretyData;
+
+
+// region xxx
+/* ..........................................*/
+
+/* ..........................................*/
+// endregion
+
+
+// region OTHER
+/* ..........................................*/
     /********************************************************************************************/
     /*                                       DATA VARIABLES                                     */
     /********************************************************************************************/
@@ -27,13 +38,7 @@ contract FlightSuretyApp {
 
     address private contractOwner;          // Account used to deploy contract
 
-    struct Flight {
-        bool isRegistered;
-        uint8 statusCode;
-        uint256 updatedTimestamp;        
-        address airline;
-    }
-    mapping(bytes32 => Flight) private flights;
+ 
 
  
     /********************************************************************************************/
@@ -118,6 +123,14 @@ contract FlightSuretyApp {
     /*                                     SMART CONTRACT FUNCTIONS                             */
     /********************************************************************************************/
 
+
+/* ..........................................*/
+// endregion
+   
+
+
+// region AIRLINE
+/* ..........................................*/
     /**
     * @dev Add an airline with isRegister = false
     *
@@ -177,15 +190,13 @@ contract FlightSuretyApp {
 
      return   flightSuretyData.getAirline(_address);
     }
+/* ..........................................*/
+// endregion
 
-
-
-
-/* ##########################################
-            Pasenger
-########################################## */
+ 
+// region PASSENGER
+/* ..........................................*/
     
-
     address[] passengersAdresses;
 
     function createPassenger
@@ -201,8 +212,52 @@ contract FlightSuretyApp {
          return passengersAdresses;
     }
 
-    /* ################### END #######################*/
-   /**
+/* ..........................................*/
+// endregion
+
+
+// region FLIGHT
+/* ..........................................*/
+
+    uint8 numberOfFlights;
+    struct Flight {
+        bool isRegistered;
+        string flight;
+        uint8 statusCode;
+        uint256 updatedTimestamp;        
+        address airline;
+    }
+    mapping(bytes32 => Flight) private flights;
+
+    bytes32[] flightsList;
+
+    function createFlight
+                            (  
+                                
+                                address airline,
+                                string flight,
+                                uint256 timestamp,
+                                uint8 statusCode
+                            )
+                            external                              
+    {
+        bytes32 key = keccak256(abi.encodePacked(airline, flight, timestamp)); 
+
+        flights[key].flight=flight;
+        flights[key].statusCode=STATUS_CODE_UNKNOWN;
+        flights[key].updatedTimestamp=timestamp;
+        flights[key].airline=airline;
+        
+        numberOfFlights += 1;
+        flightsList.push(key);
+    }
+
+    function getFlights() external view returns (bytes32[]) {
+         return flightsList;
+    }
+
+
+    /**
     * @dev Register a future flight for insuring.
     *
     */  
@@ -214,7 +269,7 @@ contract FlightSuretyApp {
     {
 
     }
-    
+
    /**
     * @dev Called after oracle has updated flight status
     *
@@ -256,10 +311,12 @@ contract FlightSuretyApp {
                             timestamp
            );
     } 
+/* ..........................................*/
+// endregion
 
 
 // region ORACLE MANAGEMENT
-
+/* ..........................................*/
     // Incremented to add pseudo-randomness at various points
     uint8 private nonce = 0;    
 
@@ -427,6 +484,7 @@ contract FlightSuretyApp {
         return random;
     }
 
+/* ..........................................*/
 // endregion
 
 }   

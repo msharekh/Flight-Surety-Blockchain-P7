@@ -5,6 +5,16 @@ import "../node_modules/openzeppelin-solidity/contracts/math/SafeMath.sol";
 contract FlightSuretyData {
     using SafeMath for uint256;
     
+
+    // region xxx
+/* ..........................................*/
+
+/* ..........................................*/
+// endregion
+
+// region OTHER
+/* ..........................................*/
+
     /********************************************************************************************/
     /*                                       DATA VARIABLES                                     */
     /********************************************************************************************/
@@ -141,8 +151,13 @@ contract FlightSuretyData {
     /*                                     SMART CONTRACT FUNCTIONS                             */
     /********************************************************************************************/
 
- /* -----------Airline--------------- */
-    struct Airline {
+
+/* ..........................................*/
+// endregion
+    
+// region AIRLINE
+/* ..........................................*/
+ struct Airline {
         bool isRegistered;
         bool isFunded;
         string airlineName;                 
@@ -248,6 +263,20 @@ contract FlightSuretyData {
         // return true; 
         // return false;
     }
+/* ..........................................*/
+// endregion
+
+
+ 
+
+   
+
+
+/* ....................................................  
+                    INSURANCE 
+.................................................... */
+
+
    /**
     * @dev Buy insurance for a flight
     *
