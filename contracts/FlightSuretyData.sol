@@ -46,7 +46,7 @@ contract FlightSuretyData {
         // airlines[contractOwner].airlineAddress=contractOwner;
         
         airlines[contractOwner].isRegistered = true;
-        airlines[contractOwner].isFunded = true;
+        airlines[contractOwner].isFund = true;
         airlines[contractOwner].airlineName = "SAUDI AIRLINES";           
         airlines[contractOwner].airlineAddress = contractOwner;
         
@@ -62,7 +62,7 @@ contract FlightSuretyData {
         // uint cnt = airlinesAdresses.length;
         // for (uint i=0; i<cnt; i++) {
         //     airlines[airlinesAdresses[i]].isRegistered = false;
-        //     airlines[airlinesAdresses[i]].isFunded = 0;
+        //     airlines[airlinesAdresses[i]].isFund = 0;
         //     airlines[airlinesAdresses[i]].airlineName = "Airline-" ;        
         //     airlines[airlinesAdresses[i]].airlineAddress = airlinesAdresses[i];
         // }
@@ -98,23 +98,32 @@ contract FlightSuretyData {
     }
 
     modifier requireIsFunded(address _address) {
-        require(airlines[_address].isFunded , "Airline should be funded");
+        require(airlines[_address].isFund , "Airline should be funded");
         _;
     }
+
+    modifier requireIsAuthorized(address _address) {
+        require(AuthorizedAddress[_address]==1 , "Not Authorized caller");
+        _;
+    }
+    
     /********************************************************************************************/
     /*                                       UTILITY FUNCTIONS                                  */
     /********************************************************************************************/
     /**
     * @dev Authorize address
     *
-    */      
+    */     
+    mapping (address=>uint8) AuthorizedAddress;
+
     function authorizeCaller(
-        address flightSuretyAppAddress
+        address _address
     ) 
                             public 
                              
     {
         //TODO: ADD ADDRESS TO ARRAY
+        AuthorizedAddress[_address]=1;
     }
 
 
@@ -157,9 +166,9 @@ contract FlightSuretyData {
     
 // region AIRLINE
 /* ..........................................*/
- struct Airline {
+    struct Airline {
         bool isRegistered;
-        bool isFunded;
+        bool isFund;
         string airlineName;                 
         address airlineAddress;
     }
@@ -175,13 +184,13 @@ contract FlightSuretyData {
                             external                              
     {
         airlines[_address].isRegistered = false;
-        airlines[_address].isFunded = true;
+        airlines[_address].isFund = false;
         airlines[_address].airlineName =_name;           
         airlines[_address].airlineAddress=_address;
         
         airlinesAdresses.push(_address);
     }
-   /**
+    /**
     * @dev Add an airline to the registration queue
     *      Can only be called from FlightSuretyApp contract
     *
@@ -190,6 +199,8 @@ contract FlightSuretyData {
                             (   
                                 address _address
                             )
+                            requireIsAuthorized(_address)
+                            requireIsFunded( _address)
                             external
                              
                             
@@ -202,15 +213,10 @@ contract FlightSuretyData {
     *      Can only be called from FlightSuretyApp contract
     *
     */   
-    function fundAirline
-                            (   
-                                address _address
-                            )
-                            external                             
-                            
-    { 
-        airlines[_address].isFunded = true;
-     }
+    function fundAirline(address _address ,uint256 fundValue) external payable{
+        airlines[_address].isFund = true;
+    }
+  
 
 
     function getAirlinesAdresses() external view returns (address[]) {
@@ -227,13 +233,13 @@ contract FlightSuretyData {
                     returns (bool)
     {
         // airlines[airlineAddress].isRegistered = true;
-        // airlines[airlineAddress].isFunded = 10;
+        // airlines[airlineAddress].isFund = 10;
         // airlines[airlineAddress].isRegistered = true;
         return airlines[_address].isRegistered;
         // return (
             // airlines[airlineAddress].isRegistered,
         //     testme,
-        //     airlines[airlineAddress].isFunded,
+        //     airlines[airlineAddress].isFund,
         //     airlineAddress
         // );
         // return true; 
@@ -250,13 +256,13 @@ contract FlightSuretyData {
                     returns (bool,bool,string,address)
     {
         // airlines[airlineAddress].isRegistered = true;
-        // airlines[airlineAddress].isFunded = 10;
+        // airlines[airlineAddress].isFund = 10;
         // airlines[airlineAddress].isRegistered = true;
         // return airlines[airlineAddress].isRegistered;
         return  
             (
                 airlines[_address].isRegistered,
-                airlines[_address].isFunded,
+                airlines[_address].isFund,
                 airlines[_address].airlineName,                
                 airlines[_address].airlineAddress
             );

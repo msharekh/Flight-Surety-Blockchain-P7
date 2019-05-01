@@ -222,23 +222,23 @@ export default class Contract {
     }
 
 
-    fundAirline(_address, callback) {
+    fundAirline(_address, fundValue, callback) {
         let self = this;
         ////debugger;
         self.flightSuretyApp.methods
-            .fundAirline(_address)
-            .send({ from: self.owner, gas: 5555555 }, (error, result) => {
+            .fundAirline(_address, fundValue)
+            .send({ from: self.owner, gas: 5555555, value: fundValue }, (error, result) => {
                 callback(_address);
             });
 
     }
 
-    fetchFlightStatus(flight, callback) {
+    fetchFlightStatus(address, flight, callback) {
         let self = this;
         //TODO: TO CONFIGURE flightSuretyData.fetchFlightStatus
 
         let payload = {
-            airline: self.airlines[0],
+            airline: address,
             flight: flight,
             timestamp: Math.floor(Date.now() / 1000)
         }

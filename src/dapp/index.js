@@ -190,6 +190,7 @@ import './flightsurety.css';
             document.getElementById("airline-info").innerHTML = html;
 
 
+
         });
         // " airline-info"
 
@@ -213,6 +214,7 @@ import './flightsurety.css';
                         <p>statusCode:\t\t${result[3].substr(0, 10)}</p>
                         <p>insured:\t\t${result[4]}</p>`;
             document.getElementById("airline-info").innerHTML = html;
+            document.getElementById("flight-number").value = result[1];
 
 
         });
@@ -252,9 +254,12 @@ import './flightsurety.css';
 
     // User-submitted transaction
     DOM.elid('submit-oracle').addEventListener('click', () => {
-        let flight = DOM.elid('flight-number').value;
+        // let flight = DOM.elid('flight-number').value;
+        let flight = document.getElementById("flight-number").value
+        let address = document.querySelector("#selGetAirlinesAdresses").value
+
         // Write transaction
-        contract.fetchFlightStatus(flight, (error, result) => {
+        contract.fetchFlightStatus(address, flight, (error, result) => {
             display('Oracles', 'Trigger oracles', [{ label: 'Fetch Flight Status', error: error, value: result.flight + ' ' + result.timestamp }]);
         });
     })
@@ -274,11 +279,11 @@ import './flightsurety.css';
 
     /************** fund airline ***************/
     DOM.elid('fund-airline').addEventListener('click', () => {
-        // let _airlineName = DOM.elid('airlineName').value;
+        let fundValue = DOM.elid('fundValue').value;
         let _address = document.querySelector("#selGetAirlinesAdresses").value
         //debugger;
         // Write transaction
-        contract.fundAirline(_address, (v) => {
+        contract.fundAirline(_address, fundValue, (v) => {
             ////debugger;
             console.log('_address', ':	', v);
         });
