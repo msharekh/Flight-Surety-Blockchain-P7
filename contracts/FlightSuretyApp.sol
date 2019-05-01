@@ -365,7 +365,7 @@ contract FlightSuretyApp {
  	}
 
      function getInsurances() external view returns (bytes32[]) {
-         return flightsList;
+         return InsurancesList  ;
     }
 
     function getInsurance
