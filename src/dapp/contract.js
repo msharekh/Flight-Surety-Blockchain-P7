@@ -42,6 +42,17 @@ export default class Contract {
             .call({ from: self.owner }, callback);
     }
 
+    getBalance(callback) {
+        let self = this;
+        debugger;
+
+        //TODO: TO CONFIGURE flightSuretyData.getAirlinesAdresses
+
+        self.flightSuretyApp.methods
+            .getBalance()
+            .call({ from: self.owner }, callback);
+
+    }
 
     /* ##########################################
                     Airline
@@ -129,10 +140,11 @@ export default class Contract {
     payInsurance(flightKey, passengerAddress, price, callback) {
         let self = this;
         debugger;
+        // {'value': 6000000000000000000}
         self.flightSuretyApp.methods
             // .registerAirline(v1, { from: self.owner });
             .payInsurance(flightKey, passengerAddress, price)
-            .send({ from: self.owner, gas: 5555555 }, (error, result) => {
+            .send({ from: self.owner, gas: 5555555, value: price }, (error, result) => {
                 debugger
                 callback(flightKey);
             });
@@ -163,6 +175,8 @@ export default class Contract {
             .call({ from: self.owner }, callback);
 
     }
+
+
 
 
     getInsurance(_key, callback) {

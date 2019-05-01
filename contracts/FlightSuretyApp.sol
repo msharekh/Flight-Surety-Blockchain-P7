@@ -39,7 +39,9 @@ contract FlightSuretyApp {
     address private contractOwner;          // Account used to deploy contract
 
  
-
+    function getBalance() public returns(uint){
+        return address(this).balance;
+    }
  
     /********************************************************************************************/
     /*                                       FUNCTION MODIFIERS                                 */
@@ -355,9 +357,7 @@ contract FlightSuretyApp {
     mapping(bytes32 => Insurance) private Insurances;
     bytes32[] InsurancesList;
 
-    function getBalance() public returns(uint){
-        return address(this).balance;
-    }
+    
     function payInsurance(
                 bytes32 _flightKey,
                 address _passengerAddress,
