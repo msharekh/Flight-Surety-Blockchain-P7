@@ -226,6 +226,7 @@ contract FlightSuretyApp {
         uint8 statusCode;
         uint256 updatedTimestamp;        
         address airline;
+        bool isInsured;
     }
     mapping(bytes32 => Flight) private flights;
 
@@ -246,7 +247,8 @@ contract FlightSuretyApp {
         flights[key].statusCode=STATUS_CODE_UNKNOWN;
         flights[key].updatedTimestamp=timestamp;
         flights[key].airline=airline;
-        
+        flights[key].isInsured=false;
+
         numberOfFlights += 1;
         flightsList.push(key);
     }
@@ -265,7 +267,8 @@ contract FlightSuretyApp {
                     returns (address ,
                                 string ,
                                 uint256 ,
-                                uint8 )
+                                uint8,
+                                bool )
     {
         
         return  
@@ -273,7 +276,9 @@ contract FlightSuretyApp {
                 flights[key].airline,
                 flights[key].flight,
                 flights[key].updatedTimestamp,
-                flights[key].statusCode
+                flights[key].statusCode,
+                flights[key].isInsured
+
             );
         // return true; 
         // return false;
@@ -344,21 +349,33 @@ contract FlightSuretyApp {
     struct Insurance {
         bytes32 flightKey;
         address passengerAddress;
-        uint price;
+        uint256 price;
         bool isClaimed;
     }
     mapping(bytes32 => Insurance) private Insurances;
     bytes32[] InsurancesList;
 
+    function getBalance() public returns(uint){
+        return address(this).balance;
+    }
+    function payInsurance(
+                bytes32 _flightKey,
+                address _passengerAddress,
+                uint256 _price
+        ) external payable {
 
-    function payInsurance(bytes32 _flightKey,address _passengerAddress) external  {
+        bytes32 key = keccak256(abi.encodePacked(
+            _flightKey, 
+            _passengerAddress
+            )); 
 
-        bytes32 key = keccak256(abi.encodePacked(_flightKey, _passengerAddress)); 
-
-		// Insurances[key].price=price;
+		Insurances[key].price=_price;
 		Insurances[key].flightKey=_flightKey;
 		Insurances[key].passengerAddress=_passengerAddress;
-		Insurances[key].isClaimed=true;
+		Insurances[key].isClaimed=false;
+
+        flights[_flightKey].isInsured=true;
+
 
         numberOfInsurances += 1;
         InsurancesList.push(key);
@@ -374,7 +391,7 @@ contract FlightSuretyApp {
                     )
                     external
                     view                     
-                    returns (uint ,
+                    returns (uint256 ,
                                 bytes32 ,
                                 address ,
                                 bool )

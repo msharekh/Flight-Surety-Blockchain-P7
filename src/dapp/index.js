@@ -141,9 +141,9 @@ import './flightsurety.css';
         // bytes32 flightKey,address passengerAddress,uint price
         let flightKey = document.querySelector("#selFlights").value
         let passengerAddress = document.querySelector("#selGetPassengersAdresses").value
-        let price = 5;
+        let price = 11;
         //debugger;
-        contract.payInsurance(flightKey, passengerAddress, ((error, v) => {
+        contract.payInsurance(flightKey, passengerAddress, price, ((error, v) => {
             // display('Oracles', 'Trigger oracles', [{ label: 'Fetch Flight Status', error: error, value: result.flight + ' ' + result.timestamp }]);
             debugger;
             console.log('v', ':	', v);
@@ -199,7 +199,8 @@ import './flightsurety.css';
                         <p>airline:\t\t${result[0].substr(0, 10)}</p>
                         <p>flight:\t\t${result[1]}</p>
                         <p>updatedTimestamp:\t\t${result[2]}</p>
-                        <p>statusCode:\t\t${result[3].substr(0, 10)}</p>`;
+                        <p>statusCode:\t\t${result[3].substr(0, 10)}</p>;
+                        <p>insured:\t\t${result[4]}</p>`;
             document.getElementById("airline-info").innerHTML = html;
 
 
