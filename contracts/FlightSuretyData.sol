@@ -22,7 +22,7 @@ contract FlightSuretyData {
     address private contractOwner;                                      // Account used to deploy contract
     bool private operational = true;                                    // Blocks all state changes throughout the contract if false
 
-    
+    uint256 public airlineCount;
 
  
     /********************************************************************************************/
@@ -190,6 +190,11 @@ contract FlightSuretyData {
         
         airlinesAdresses.push(_address);
     }
+
+    function getAirlineCount()  external view returns (uint256)
+    {
+        return airlineCount;
+    }
     /**
     * @dev Add an airline to the registration queue
     *      Can only be called from FlightSuretyApp contract
@@ -201,8 +206,10 @@ contract FlightSuretyData {
                             )
                             requireIsAuthorized(_address)
                             requireIsFunded( _address)
+                            requireIsOperational()
+                               
                             external
-                             
+                            
                             
     { 
         airlines[_address].isRegistered = true;
@@ -269,6 +276,8 @@ contract FlightSuretyData {
         // return true; 
         // return false;
     }
+
+    
 /* ..........................................*/
 // endregion
 

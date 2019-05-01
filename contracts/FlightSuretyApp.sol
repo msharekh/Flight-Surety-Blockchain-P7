@@ -72,7 +72,21 @@ contract FlightSuretyApp {
         _;
     }
 
-   
+    modifier requireOnlyExistingAirlineRegisterNewAirline(address _address) //Multiparty Consensus
+    {
+        bool airlineExists = false;
+        if(flightSuretyData.getAirlineCount() < 4)
+        {
+            if(flightSuretyData.isAirline(_address)){
+                airlineExists=true;
+            }
+        }
+            
+        require(airlineExists,"valid airline can only register a new airline.");
+        _;
+    }
+
+    
 
     /********************************************************************************************/
     /*                                       CONSTRUCTOR                                        */
@@ -162,7 +176,7 @@ contract FlightSuretyApp {
                                 address _address 
                             )
                             external  
-                                                  
+                            requireOnlyExistingAirlineRegisterNewAirline(_address)               
                             // returns(bool success, uint256 votes)
                             // view
                             // returns(bool)
@@ -590,9 +604,21 @@ contract FlightSuretyApp {
 contract FlightSuretyData{
 
     function isOperational() public view returns(bool);
-    function registerAirline(address _address) external;
+        function registerAirline
+                            (   
+                                address _address
+                            )                             
+                            external;
     function getAirlinesAdresses() external view returns (address[]);
     function createAirline(address _address,string _name) external;
     function getAirline(address _address) external view returns (bool,uint256,string,address);
     function fundAirline(address _address ,uint256 fundValue) external payable;
+    function getAirlineCount()  external view returns (uint256);
+    function isAirline
+                    (
+                        address _address
+                    )
+                    external
+                    view                     
+                    returns (bool);
 }
